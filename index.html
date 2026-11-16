@@ -765,6 +765,98 @@
     .ypair i{width:5px}
     .navrange{font-size:12.5px}
   }
+
+  /* ============================================================
+     기간 보기 (주간 · 월간 · 연간)
+     ============================================================ */
+  .periodbar{padding:9px 16px 0}
+  .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:0 1px 4px rgba(var(--shadow),.05)}
+  .seg button{padding:8px 0 9px;border-radius:11px;font-size:12.5px;font-weight:800;color:var(--ink-2);letter-spacing:-.1px;white-space:nowrap}
+  .seg button.on{background:linear-gradient(160deg,var(--accent),var(--accent-2));color:var(--accent-ink);box-shadow:0 2px 7px rgba(var(--shadow),.18)}
+  .seg button:active{transform:scale(.985)}
+  .navrow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:8px 16px 0}
+  .navbtn{width:38px;height:38px;border-radius:12px;background:var(--card);border:1px solid var(--line-2);display:grid;place-items:center;font-size:11px;font-weight:900;color:var(--ink-2);box-shadow:0 1px 3px rgba(var(--shadow),.05)}
+  .navbtn:active{transform:scale(.95);background:var(--card-soft)}
+  .navmid{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0}
+  .navrange{font-size:13.5px;font-weight:800;letter-spacing:-.4px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .navjump{flex:0 0 auto;padding:6px 10px;border-radius:999px;background:var(--soft);color:var(--soft-ink);font-size:11px;font-weight:800;white-space:nowrap;border:1px solid transparent}
+  .navjump:active{transform:scale(.96)}
+  .navjump.now{background:var(--chip);color:var(--ink-3);border-color:var(--line)}
+
+  /* ---------------- 월간 달력 ---------------- */
+  .cal{margin:12px 16px 0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:12px 10px 10px;box-shadow:0 2px 10px rgba(var(--shadow),.06)}
+  .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:5px}
+  .cal-dow span{text-align:center;font-size:10.5px;font-weight:800;color:var(--ink-3)}
+  .cal-dow span.sun{color:#B94A44}
+  html[data-theme="gold"] .cal-dow span.sun{color:#E88A7E}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+  .calcell{min-height:45px;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:3px 1px;background:transparent;border:1px solid transparent}
+  .calcell.blank{visibility:hidden;pointer-events:none}
+  .calcell .cd{font-size:12px;font-weight:800;color:var(--ink-2);line-height:1;padding:1px 4px;border-radius:6px}
+  .calcell.sun .cd{color:#B94A44}
+  html[data-theme="gold"] .calcell.sun .cd{color:#E88A7E}
+  .calcell.has{background:var(--card-soft);border-color:var(--line)}
+  .calcell.has .cd{color:var(--ink)}
+  .calcell.doneall{background:var(--ok-bg);border-color:transparent}
+  .calcell.doneall .cd{color:var(--ok-ink)}
+  .calcell.today .cd{background:var(--accent);color:var(--accent-ink)}
+  .calcell.sel{border-color:var(--accent);box-shadow:0 2px 8px rgba(var(--shadow),.16)}
+  .calcell:active{transform:scale(.96)}
+  .cdots{display:flex;gap:2px;height:5px;align-items:center}
+  .cdots i{display:block;width:4px;height:4px;border-radius:2px;background:var(--accent-2);opacity:.3}
+  .cdots i.f{opacity:1}
+
+  /* ---------------- 선택한 날짜 식단 ---------------- */
+  .daypanel{margin:12px 16px 0;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 2px 10px rgba(var(--shadow),.06)}
+  .dp-head{display:flex;align-items:center;gap:8px;padding:13px 15px 11px}
+  .dp-head .dt{font-size:14.5px;font-weight:800;letter-spacing:-.3px;color:var(--ink)}
+  .dp-count{margin-left:auto;font-size:11.5px;font-weight:800;color:var(--ink-3)}
+  .dp-count.on{color:var(--accent)}
+
+  /* ---------------- 지표 4칸 ---------------- */
+  .kpi4{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 16px 0}
+  .kpi4 .box{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:12px 13px 13px;min-width:0;box-shadow:0 1px 4px rgba(var(--shadow),.04)}
+  .kpi4 .lb{font-size:10.5px;font-weight:800;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .kpi4 .val{font-size:16.5px;font-weight:800;color:var(--ink);letter-spacing:-.8px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .kpi4 .val .u{font-size:10.5px;font-weight:800;margin-left:1px;letter-spacing:0}
+  .kpi4 .cap{font-size:10px;font-weight:700;color:var(--ink-3);margin-top:4px;line-height:1.45}
+
+  /* ---------------- 연간 막대 그래프 ---------------- */
+  .ycard{margin:12px 16px 0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:15px 13px 13px;box-shadow:0 2px 10px rgba(var(--shadow),.06)}
+  .ychart{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:12px}
+  .ycol{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}
+  .ypair{height:112px;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:2px}
+  .ypair i{display:block;width:6px;border-radius:3px 3px 1px 1px}
+  .ypair .bp{background:linear-gradient(180deg,var(--accent-2),var(--accent))}
+  .ypair .bu{background:var(--accent-2);opacity:.4}
+  .ym{font-size:9.5px;font-weight:800;color:var(--ink-3);line-height:1}
+  .ycol.cur .ym{color:var(--accent)}
+  .ylegend{display:flex;align-items:center;gap:14px;margin-top:11px;font-size:10.5px;font-weight:800;color:var(--ink-3)}
+  .ylegend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+  .ylegend .lp{background:linear-gradient(180deg,var(--accent-2),var(--accent))}
+  .ylegend .lu{background:var(--accent-2);opacity:.4}
+  .ychips{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 16px 0}
+  .ychip{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:9px 11px;min-width:0}
+  .ychip .m{font-size:11px;font-weight:800;color:var(--ink)}
+  .ychip .v{font-size:10.5px;font-weight:700;color:var(--ink-2);margin-top:2px;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ychip.dim{background:var(--dim-bg)}
+  .ychip.dim .m,.ychip.dim .v{color:var(--dim-ink)}
+
+  /* ---------------- 빠른 추가 ---------------- */
+  .ktag{display:inline-block;margin-left:6px;font-size:10px;font-weight:800;color:var(--ink-2);background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 7px;vertical-align:2px;white-space:nowrap}
+  .quickwrap{margin:12px 16px 0}
+  .quicknote{margin:7px 2px 0;font-size:10.5px;font-weight:700;color:var(--ink-3);line-height:1.6}
+  .mergebox{margin-top:11px}
+  .mergebox .mhint{margin:0 0 9px;font-size:11px;font-weight:700;color:var(--ink-2);line-height:1.6}
+  .modal .btn-ghost{width:100%;margin-top:8px}
+  .sundot{color:#B94A44}
+
+  @media (max-width:360px){
+    .calcell{min-height:41px}
+    .kpi4 .val{font-size:15px}
+    .ypair i{width:5px}
+    .navrange{font-size:12.5px}
+  }
 </style>
 </head>
 <body>
@@ -1225,6 +1317,18 @@
     if(d.getTime() - base.getTime() > 15552000000) d = new Date(y - 1, Number(m[1]) - 1, Number(m[2]));
     return isoOf(d);
   }
+  function guessDate(txt, baseIso){
+    var str = String(txt == null ? '' : txt);
+    var iso = str.match(/(\d{4}-\d{2}-\d{2})/);
+    if(iso && isIso(iso[1])) return iso[1];
+    var m = str.match(/(\d{1,2})\s*\/\s*(\d{1,2})/);
+    if(!m) return '';
+    var base = parseIso(baseIso) || new Date();
+    var y = base.getFullYear();
+    var d = new Date(y, Number(m[1]) - 1, Number(m[2]));
+    if(d.getTime() - base.getTime() > 15552000000) d = new Date(y - 1, Number(m[1]) - 1, Number(m[2]));
+    return isoOf(d);
+  }
   function normOrders(a, refIso){
     if(!Array.isArray(a)) return null;
     var base = isIso(refIso) ? parseIso(refIso) : new Date();
@@ -1249,7 +1353,7 @@
       };
     });
   }
-  function normInv(a, defaultDate){
+  function normInv(a, defaultDate, refIso){
     if(!Array.isArray(a)) return null;
     return a.filter(function(x){ return x && typeof x === 'object' && x.name; }).map(function(x, i){
       return {
@@ -1262,7 +1366,7 @@
         src: String(x.src || 'import'),
         fav: !!x.fav,
         used: !!x.used,
-        date: isIso(x.date) ? x.date : (isIso(defaultDate) ? defaultDate : ''),
+        date: isIso(x.date) ? x.date : (isIso(defaultDate) ? defaultDate : guessDate(x.from, refIso)),
         usedDate: isIso(x.usedDate) ? x.usedDate : ''
       };
     });
@@ -1295,7 +1399,7 @@
     base.period = PERIODS[p.period] ? p.period : 'week';
     base.orders = normOrders(p.orders, ref) || [];
     base.meals = normMeals(p.meals != null ? p.meals : (p.days != null ? p.days : p.diet), ref);
-    base.inventory = normInv(p.inventory || p.stock || p.fridge, '') || [];
+    base.inventory = normInv(p.inventory || p.stock || p.fridge, '', ref) || [];
     base.shopping = normShop(p.shopping || p.shop) || [];
     base.offline = normOffline(p.offline || p.receipts, '') || [];
     if(typeof p.dedupe === 'boolean') base.dedupe = p.dedupe;
@@ -2007,7 +2111,7 @@
       out.meals = normMeals(d.meals != null ? d.meals : d.days, ref);
       out.any = true;
     }
-    if(d.inventory != null){ out.inventory = normInv(d.inventory, defaultDate) || []; out.any = true; }
+    if(d.inventory != null){ out.inventory = normInv(d.inventory, defaultDate, ref) || []; out.any = true; }
     if(d.shopping != null){ out.shopping = normShop(d.shopping) || []; out.any = true; }
     if(d.offline != null){ out.offline = normOffline(d.offline, defaultDate) || []; out.any = true; }
     return out;
