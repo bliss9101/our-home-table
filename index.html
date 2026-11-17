@@ -1590,6 +1590,8 @@
     if(!Array.isArray(a)) return null;
     return a.filter(function(x){ return x && typeof x === 'object' && x.name; }).map(function(x, i){
       var q = normQty(x);
+      /* 예전 데이터에서 소진 표시만 있고 남은 양이 없으면 0으로 본다 */
+      if(x.used && (x.remainQty == null || x.remainQty === '')) q.remainQty = 0;
       var from = String(x.from || x.store || x.place || '');
       return {
         id: String(x.id || ('i' + i)),
