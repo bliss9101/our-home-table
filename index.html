@@ -435,11 +435,11 @@
     opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;z-index:80;
   }
   #toast.on{opacity:1;transform:translate(-50%,0)}
-  #mealBackdrop,#invBackdrop,#dataBackdrop{
+  #mealBackdrop,#invBackdrop,#dataBackdrop,#entryBackdrop,#labelBackdrop{
     position:fixed;inset:0;z-index:90;background:var(--backdrop);
     display:flex;align-items:flex-end;justify-content:center;padding:0;
   }
-  #mealBackdrop[hidden],#invBackdrop[hidden],#dataBackdrop[hidden]{display:none}
+  #mealBackdrop[hidden],#invBackdrop[hidden],#dataBackdrop[hidden],#entryBackdrop[hidden],#labelBackdrop[hidden]{display:none}
   .modal{
     width:100%;max-width:480px;background:var(--modal);border-radius:24px 24px 0 0;
     padding:20px 18px calc(18px + env(safe-area-inset-bottom));
@@ -990,6 +990,90 @@
     .ingrow select,.ingrow input{font-size:12px;padding:9px 6px}
     .mf input,.mf select,.mf textarea{font-size:13.5px}
   }
+
+  /* ================= v4: 가계부 · 신카 청구 · 구매처 묶음 ================= */
+  /* 구매처 카드 */
+  .storegrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:10px 16px 0}
+  .storecard{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:12px 13px;min-width:0;box-shadow:0 1px 4px rgba(var(--shadow),.04)}
+  .storecard .sc-h{display:flex;align-items:baseline;gap:6px;min-width:0}
+  .storecard .sc-n{font-size:13px;font-weight:800;color:var(--ink);letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .storecard .sc-c{margin-left:auto;font-size:10px;font-weight:800;color:var(--ink-3);white-space:nowrap}
+  .storecard .sc-v{font-size:17px;font-weight:800;color:var(--ink);letter-spacing:-.7px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .storecard .sc-v .u{font-size:10.5px;font-weight:800;margin-left:1px;letter-spacing:0}
+  .storecard .sc-bar{height:5px;border-radius:999px;background:var(--track);margin-top:8px;overflow:hidden}
+  .storecard .sc-bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  .storecard .sc-m{margin-top:5px;font-size:10px;font-weight:700;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .storehead{display:flex;align-items:baseline;gap:7px;margin:16px 16px 0}
+  .storehead .sn{font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-.3px}
+  .storehead .ss{font-size:11px;font-weight:700;color:var(--ink-3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+  /* 집밥 vs 외식 비율 */
+  .ratio{display:flex;height:15px;border-radius:999px;overflow:hidden;background:var(--track);margin-top:12px}
+  .ratio i{display:block;height:100%;transition:width .35s ease}
+  .ratio .rh{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  .ratio .rd{background:var(--accent-2);opacity:.42}
+  .ratio-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:11px;font-size:11.5px;font-weight:800;color:var(--ink-2)}
+  .ratio-legend span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .ratio-legend span b{color:var(--ink);font-weight:800}
+  .ratio-legend i{width:8px;height:8px;border-radius:2px;display:inline-block;flex:0 0 auto}
+  .ratio-legend .lh{background:linear-gradient(180deg,var(--accent-2),var(--accent))}
+  .ratio-legend .ld{background:var(--accent-2);opacity:.42}
+  .ratio-total{margin-top:9px;font-size:11px;font-weight:700;color:var(--ink-3);line-height:1.5}
+
+  /* 가계부 내역 */
+  .entrylist{margin:10px 16px 0;display:flex;flex-direction:column;gap:8px}
+  .erow{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:10px 12px;box-shadow:0 1px 4px rgba(var(--shadow),.04)}
+  .erow .edt{font-size:10.5px;font-weight:800;color:var(--ink-3);white-space:nowrap;text-align:center}
+  .erow .ebody{min-width:0}
+  .erow .ecat{font-size:13.5px;font-weight:800;color:var(--ink);letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .erow .ememo{margin:2px 0 0;font-size:10.5px;font-weight:600;color:var(--ink-3);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .erow .eamt{font-size:13.5px;font-weight:800;color:var(--ink);white-space:nowrap;letter-spacing:-.2px}
+  .erow .eamt.in{color:var(--accent)}
+  .erow .eamt.sv{color:#B9642F}
+  html[data-theme="gold"] .erow .eamt.sv{color:#E0A972}
+
+  /* 신카 청구 예정 */
+  .billbig{margin-top:8px}
+  .billbig .v{font-size:27px;font-weight:800;color:var(--ink);letter-spacing:-1.1px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+  .billbig .v .u{font-size:12px;font-weight:800;margin-left:2px;letter-spacing:0}
+  .billbig .cap{font-size:11px;font-weight:700;color:var(--ink-2);margin-top:5px;line-height:1.5}
+  .billrows{margin-top:8px}
+  .billrow{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:12px;font-weight:700;color:var(--ink-2);border-top:1px dashed var(--line)}
+  .billrow > span:first-child{white-space:nowrap}
+  .billrow .v{font-weight:800;color:var(--ink);text-align:right;white-space:nowrap}
+  .billinst{margin-top:6px;display:flex;flex-direction:column;gap:4px}
+  .billinst .bi{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;font-weight:700;color:var(--ink-3)}
+  .billinst .bi b{color:var(--ink-2);font-weight:800}
+  .cfgline{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:11px;font-size:11px;font-weight:700;color:var(--ink-2)}
+  .cfgline select{padding:6px 7px;border-radius:9px;border:1px solid var(--line-2);background:var(--field);font-size:11.5px;font-weight:800;color:var(--ink)}
+  .adjline{display:flex;align-items:center;gap:6px;margin-top:10px}
+  .adjline input{flex:1 1 auto;min-width:0;padding:9px 11px;border-radius:11px;border:1px solid var(--line-2);background:var(--field);font-size:13px;font-weight:700;color:var(--ink)}
+  .adjline .un{font-size:11.5px;font-weight:800;color:var(--ink-2)}
+  .adjline button{flex:0 0 auto;padding:8px 10px;border-radius:10px;border:1px solid var(--line-2);background:var(--card-soft);font-size:11px;font-weight:800;color:var(--ink-2)}
+  .adjline button[hidden]{display:none}
+  #enInstBox[hidden],#enPayWrap[hidden]{display:none}
+
+  /* 사용자(나 · 신랑) 구분 */
+  .who-sum{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:6px;font-size:11.5px;font-weight:800;color:var(--ink-2);line-height:1.5}
+  .who-sum b{color:var(--ink);font-weight:800}
+  .wbadge{display:inline-block;margin-left:5px;font-size:9.5px;font-weight:800;color:var(--soft-ink);background:var(--soft);border-radius:999px;padding:1px 7px;vertical-align:1px;white-space:nowrap}
+  html[data-theme="gold"] .wbadge{color:#E5C76B;background:#2C2618}
+  .whoedit{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:999px;border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);font-size:10px;font-weight:800;white-space:nowrap}
+  .whoedit:active{transform:scale(.96)}
+  @media (max-width:360px){ .whoedit span{display:none} }
+  .billadj{font-size:10.5px;font-weight:700;color:var(--ink-3);margin-top:7px;line-height:1.5}
+
+  /* 지출 막대(비율 표시) */
+  .crow .cv b{display:block;font-weight:800}
+  .crow .cv i{display:block;font-style:normal;font-size:9.5px;font-weight:700;color:var(--ink-3);text-align:right;line-height:1.2}
+  .crow .cv{display:block;text-align:right}
+
+  @media (max-width:360px){
+    .storegrid{grid-template-columns:1fr}
+    .storecard .sc-v{font-size:16px}
+    .billbig .v{font-size:24px}
+    .erow{grid-template-columns:34px 1fr auto;gap:8px;padding:9px 10px}
+  }
 </style>
 </head>
 <body>
@@ -1110,50 +1194,82 @@
       <p class="footnote" id="shopFoot"></p>
     </section>
 
-    <!-- ============ 4. 가계부 ============ -->
+    <!-- ============ 4. 가계부 (생활 가계부) ============ -->
     <section id="pane-ledger" hidden>
       <div class="kpi">
-        <div class="lb">총 구매비용<span class="ktag" id="lPeriod">주간</span></div>
+        <div class="lb">총 지출 (파킹 제외)<span class="ktag" id="lPeriod">주간</span></div>
         <div class="big" id="lTotal">0<span class="u">원</span></div>
-        <div class="cap" id="lSplit">쿠팡 주문 0원 + 직접 입력 0원</div>
+        <div class="cap" id="lSplit">장보기 0원 · 외식 0원</div>
+        <div class="who-sum" id="lWho"><span>내 사용 <b>0원</b></span><span>신랑 <b>0원</b></span></div>
       </div>
       <div class="kpi2">
         <div class="box">
-          <div class="lb">소진비용</div>
-          <div class="val" id="lUsed">0<span class="u">원</span></div>
-          <div class="cap" id="lUsedCap">냉장고에 남은 재고<br>0원</div>
+          <div class="lb">총 수입</div>
+          <div class="val" id="lIncome">0<span class="u">원</span></div>
+          <div class="cap" id="lIncomeCap">수입 · 이자수익</div>
         </div>
         <div class="box">
-          <div class="lb">평균식대 · 끼니당</div>
-          <div class="val" id="lPer">0<span class="u">원</span></div>
-          <div class="cap" id="lPerCap">계획 0끼 기준<br>1인당 0원</div>
+          <div class="lb">저축 · 비상금 파킹</div>
+          <div class="val" id="lSave">0<span class="u">원</span></div>
+          <div class="cap" id="lSaveCap">비상금 · 적금<br>지출에 넣지 않아요</div>
         </div>
       </div>
       <div class="kpi2" style="grid-template-columns:1fr">
         <div class="box">
-          <div class="lb">평균식대 · 실제 소진</div>
-          <div class="val" id="lUsedPer">0<span class="u">원</span></div>
-          <div class="cap" id="lUsedPerCap">소진비용 ÷ 완료 0끼 · 1인당 0원</div>
+          <div class="lb">순현금흐름</div>
+          <div class="val" id="lNet">0<span class="u">원</span></div>
+          <div class="cap" id="lNetCap">총 수입 − 총 지출</div>
         </div>
       </div>
 
-      <div style="margin:18px 16px 0"><div class="sec-title">🧺 직접 입력한 구매 <span class="sub">냉장고 재고에 적은 품목 · 구매일 기준</span></div></div>
+      <div class="chart">
+        <div class="sec-title" style="font-size:14.5px">카테고리별 지출</div>
+        <div class="muted" id="lChartCap" style="margin-top:3px">0개 분류</div>
+        <div id="lChartRows"></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-title">💳 이번 달 신카 청구 예정 <span class="sub" id="cbMonth">0월</span></div>
+        <div id="cardBillBody"></div>
+      </div>
+
+      <div class="card">
+        <div class="sec-title">🏦 비상금 파킹 <span class="sub">지출 합계에서 빠져요</span></div>
+        <div class="billbig"><span class="v" id="lParkTotal">0<span class="u">원</span></span></div>
+        <p class="billadj" id="lParkCap" style="margin-top:5px">전체 기간 누적 잔액</p>
+      </div>
+
+      <div style="margin:18px 16px 0"><div class="sec-title">📝 내역 <span class="sub" id="lCount">0건</span></div></div>
+      <div class="chips" id="whoChips" style="padding-top:8px"></div>
+      <div class="entrylist" id="entryList" style="margin-top:2px"></div>
+      <div style="margin:12px 16px 0">
+        <button class="btn-wide" id="btnAddEntry" data-act="add-entry">+ 내역 추가 (수입 · 파킹 · 지출)</button>
+      </div>
+
+      <div style="margin:20px 16px 0"><div class="sec-title">🧺 장보기 자동 집계 <span class="sub">냉장고·주문에서 모은 금액</span></div></div>
       <div class="ledgerlist" id="directList"></div>
       <div style="margin:10px 16px 0">
-        <button class="btn-ghost" id="btnAddFromLedger" style="width:100%">+ 구매 품목 직접 입력 (냉장고 재고에도 들어가요)</button>
+        <button class="btn-ghost" id="btnAddFromLedger" style="width:100%">+ 산 품목을 냉장고에 추가 (재고·장보기로 들어가요)</button>
       </div>
       <p class="footnote" id="ledgerFoot"></p>
     </section>
 
     <!-- ============ 5. 장보기 요약 ============ -->
     <section id="pane-sum" hidden>
-      <div class="card" style="padding:14px 16px">
-        <div class="sec-title">쿠팡 주문 <span class="sub" id="sumSub">0건</span></div>
+      <div style="margin:16px 16px 0">
+        <div class="sec-title">🛍️ 구매처별 주문(내역) <span class="sub" id="sumSub">0곳 · 0건</span></div>
+        <p class="muted" id="sumHint" style="margin:5px 0 0">이 기간에 실제로 산 곳끼리 묶어 보여드려요.</p>
       </div>
-      <div id="orderList"></div>
+      <div class="storegrid" id="storeCards"></div>
+      <div id="storeOrders"></div>
+
+      <div class="card">
+        <div class="sec-title">🍽️ 집밥(장보기) vs 외식 <span class="sub" id="ratioSub">주간</span></div>
+        <div id="ratioBody"></div>
+      </div>
 
       <div class="chart">
-        <div class="sec-title" style="font-size:14.5px">카테고리별 지출</div>
+        <div class="sec-title" style="font-size:14.5px">식재료 카테고리별 지출</div>
         <div class="muted" id="chartCap" style="margin-top:3px">0개 분류 · 0개 품목</div>
         <div id="chartRows"></div>
       </div>
@@ -1225,7 +1341,7 @@
         <div><label class="mf-l" for="ivPrice" style="margin-top:0">금액(원)</label><input id="ivPrice" type="number" inputmode="numeric" placeholder="0"></div>
       </div>
       <label class="mf-l" for="ivFrom">구매처</label>
-      <input id="ivFrom" placeholder="예: 쿠팡, 이마트, 컬리, 동네마트" autocomplete="off">
+      <input id="ivFrom" placeholder="예: 쿠팡, 네이버, 지마켓, 알리" autocomplete="off">
       <div class="chiprow" id="ivChips"></div>
       <div class="mfg2" style="margin-top:12px">
         <div><label class="mf-l" for="ivDate" style="margin-top:0">구매일</label><input id="ivDate" type="date"></div>
@@ -1252,6 +1368,64 @@
   </div>
 </div>
 
+<div id="entryBackdrop" hidden>
+  <div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="enTitle">
+    <h4 id="enTitle">내역 추가</h4>
+    <p class="hint" id="enHint"></p>
+    <div class="mf">
+      <div class="mfg2">
+        <div><label class="mf-l" for="enDate" style="margin-top:0">날짜</label><input id="enDate" type="date"></div>
+        <div><label class="mf-l" for="enAmount" style="margin-top:0">금액(원)</label><input id="enAmount" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+      </div>
+      <div class="mfg2" style="margin-top:10px">
+        <div><label class="mf-l" for="enKind" style="margin-top:0">구분</label><select id="enKind"></select></div>
+        <div><label class="mf-l" for="enCat" style="margin-top:0">분류</label><select id="enCat"></select></div>
+      </div>
+      <div class="mf-l">사용자</div>
+      <div class="chiprow" id="enWhoRow">
+        <button type="button" class="cchip on" data-act="who" data-who="me">나</button>
+        <button type="button" class="cchip" data-act="who" data-who="partner">배우자</button>
+        <button type="button" class="cchip" data-act="who" data-who="shared">공용</button>
+      </div>
+      <label class="mf-l" for="enMemo">비고 (선택)</label>
+      <input id="enMemo" placeholder="예: 넷플릭스, 친구 결혼식, 주유" autocomplete="off">
+      <div id="enPayWrap">
+        <div class="mfg2" style="margin-top:10px">
+          <div><label class="mf-l" for="enPay" style="margin-top:0">결제수단</label>
+            <select id="enPay"><option value="card">신용카드</option><option value="cash">체크·현금·이체</option></select>
+          </div>
+          <div id="enInstBox"><label class="mf-l" for="enInst" style="margin-top:0">할부</label><select id="enInst"></select></div>
+        </div>
+      </div>
+    </div>
+    <div class="acts">
+      <button class="danger" id="enDel">삭제</button>
+      <button class="cancel" id="enCancel">취소</button>
+      <button class="save" id="enSave">저장</button>
+    </div>
+  </div>
+</div>
+
+<div id="labelBackdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wbTitle">
+    <h4 id="wbTitle">사용자 이름</h4>
+    <p class="hint">가계부에 누가 쓴 건지 적을 때 보이는 이름이에요. 이 브라우저에만 저장되고 백업 파일에도 함께 담깁니다.</p>
+    <div class="mf">
+      <label class="mf-l" for="wbMe" style="margin-top:0">본인</label>
+      <input id="wbMe" maxlength="8" autocomplete="off" placeholder="나">
+      <label class="mf-l" for="wbPartner">배우자</label>
+      <input id="wbPartner" maxlength="8" autocomplete="off" placeholder="배우자">
+      <label class="mf-l" for="wbShared">공용</label>
+      <input id="wbShared" maxlength="8" autocomplete="off" placeholder="공용">
+    </div>
+    <div class="acts">
+      <button class="cancel" id="wbReset">기본값</button>
+      <button class="cancel" id="wbCancel">취소</button>
+      <button class="save" id="wbSave">저장</button>
+    </div>
+  </div>
+</div>
+
 <div id="dataBackdrop" hidden>
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dtTitle">
     <h4 id="dtTitle">데이터 불러오기 · 합치기 · 백업</h4>
@@ -1266,11 +1440,11 @@
       <input id="importFile" type="file" accept=".json,application/json,text/plain">
     </div>
     <div class="orline">또는 내용 붙여넣기</div>
-    <textarea id="importText" placeholder='{ "inventory": [ { "name": "사과", "spec": "1.5kg · 1봉", "price": 6900, "from": "이마트", "date": "2026-11-17" } ] }'></textarea>
+    <textarea id="importText" placeholder='{ "inventory": [ { "name": "사과", "spec": "1.5kg · 1봉", "price": 6900, "from": "네이버", "date": "2026-11-17" } ], "ledger": [ { "date": "2026-11-17", "kind": "expense", "cat": "외식", "amount": 24000, "memo": "저녁", "pay": "card", "inst": 0 } ] }'></textarea>
     <div class="imsg" id="importMsg"></div>
 
     <div class="mergebox">
-      <p class="mhint">같은 주문·같은 품목·같은 날 같은 끼니는 건너뜁니다. 날짜가 없는 항목은 오늘 날짜로 들어가요.</p>
+      <p class="mhint">같은 주문·같은 품목·같은 날 같은 끼니·같은 가계부 내역은 건너뜁니다. 날짜가 없는 항목은 오늘 날짜로 들어가요. 주문에 "store": "네이버"처럼 적으면 구매처가 그 이름으로 묶입니다.</p>
       <button class="btn-primary" id="importMerge" style="width:100%">➕ 기존 데이터에 합치기</button>
       <button class="btn-ghost" id="importRestore">전체 복원 (지금 데이터를 덮어쓰기)</button>
     </div>
@@ -1302,8 +1476,8 @@
     "meal": "주간·월간·연간으로 넘겨 보며 식단을 관리합니다. 끼니에 냉장고 재료와 사용량을 연결해 두면 완료 체크할 때 재고가 그만큼 줄고 남은 양이 바로 보여요. 끼니 카드의 수정 버튼에서 고치거나 삭제할 수 있습니다.",
     "fridge": "재료마다 총량·남은 양과 구매일·구매처를 적어 두면 보관일수와 유통기한을 확인할 수 있어요. 재료를 누르면 수정·삭제할 수 있고, 남은 양이 0이 되면 자동으로 소진 처리됩니다.",
     "shop": "식단에 필요한데 냉장고에 없는 부재료를 모아 두는 목록이에요. 복사한 요청을 피클에게 붙여넣으면 쿠팡 장바구니에 담아 두고, 결제는 직접 하시면 됩니다.",
-    "ledger": "가계부는 위에서 고른 기간(주간·월간·연간)에 맞춰 계산됩니다. 총 구매비용 = 기간 안의 쿠팡 주문 금액 + 냉장고 재고에 직접 입력한 구매 품목(구매일 기준) 금액입니다.",
-    "sum": "불러온 쿠팡 주문을 기간별로 보여줍니다. 음식이 아닌 생활용품은 재고와 그래프에서 빠집니다."
+    "ledger": "가계부는 위에서 고른 기간(주간·월간·연간)에 맞춰 계산됩니다. 총 지출(파킹 제외) = 기간 안의 장보기(냉장고 재고·주문 식품) + 가계부에 적은 지출입니다. 비상금·적금은 지출에 넣지 않고 파킹으로 따로 모읍니다. 냉장고에 넣은 구매는 자동으로 장보기에 잡히므로 같은 건을 가계부에 또 적으면 두 번 잡힙니다.",
+    "sum": "불러온 주문과 냉장고에 적은 구매를 구매처별로 묶어 보여줍니다. 집밥(장보기)과 외식이 차지하는 비율을 함께 볼 수 있고, 음식이 아닌 생활용품은 식재료 그래프에서 빠집니다."
   }
 };
   var SEED = null;
@@ -1315,6 +1489,17 @@
   };
   var THEME_KEY = 'ourHomeTable.theme';
   var TABS = ['meal','fridge','shop','ledger','sum'];
+  /* 가계부 구분 3종 — 수입 / 파킹·저축 / 지출 */
+  var LEDGER = {
+    income:  { name:'수입',      cats:['수입','이자수익'] },
+    save:    { name:'파킹·저축',  cats:['비상금','적금'] },
+    expense: { name:'지출',      cats:['장보기','외식','소모품','핸드폰요금','티비인터넷요금','구독료','관리비','보험','대출','경조사비','의료비','교육비','기타'] }
+  };
+  var LEDGER_KINDS = ['income','save','expense'];
+  /* 지출자 3칸 — 라벨은 사용자가 직접 바꿀 수 있다 (기본값은 공개용) */
+  var WHO = ['me','partner','shared'];
+  var DEFAULT_LABELS = { me:'나', partner:'배우자', shared:'공용' };
+  var INST_OPTS = [0,2,3,4,5,6,7,8,9,10,11,12];
   var PERIODS = {week:'주간', month:'월간', year:'연간'};
   var DOW = ['일','월','화','수','목','금','토'];
 
@@ -1422,12 +1607,14 @@
   /* ================= 상태 정규화 ================= */
   function blankState(){
     return {
-      v: 3,
+      v: 4,
       period: 'week',
       cursor: todayIso(),
       orders: [], meals: {}, inventory: [], shopping: [],
+      ledger: [], cardAdj: {}, cardCfg: { start: 1, end: 0 },
+      userLabels: { me:DEFAULT_LABELS.me, partner:DEFAULT_LABELS.partner, shared:DEFAULT_LABELS.shared },
       dedupe: true,
-      ui: { tab:'meal', cat:'전체', q:'', selDay:'' }
+      ui: { tab:'meal', cat:'전체', q:'', selDay:'', who:'' }
     };
   }
   function slotNorm(s){
@@ -1622,6 +1809,88 @@
       return { id: String(x.id || ('s' + i)), name: String(x.name), memo: String(x.memo || ''), fav: !!x.fav, done: !!x.done };
     });
   }
+  /* ================= 가계부 내역 정규화 ================= */
+  function kindOfCat(cat){
+    var c = String(cat || '').trim();
+    for(var i = 0; i < LEDGER_KINDS.length; i++){
+      var k = LEDGER_KINDS[i];
+      if(LEDGER[k].cats.indexOf(c) >= 0) return k;
+    }
+    return '';
+  }
+  function normKind(v, cat){
+    var k = String(v == null ? '' : v).trim();
+    if(k === 'income' || k === '수입') return 'income';
+    if(k === 'save' || k === '파킹' || k === '저축' || k === '파킹·저축') return 'save';
+    if(k === 'expense' || k === '지출') return 'expense';
+    return kindOfCat(cat) || 'expense';
+  }
+  function normWho(v){
+    var s = String(v == null ? '' : v).trim();
+    if(s === 'partner' || s === '배우자' || s === '신랑' || s === '남편' || s === 'husband') return 'partner';
+    if(s === 'shared' || s === '공용' || s === '공통') return 'shared';
+    return 'me';
+  }
+  function normLabels(o){
+    var out = { me:DEFAULT_LABELS.me, partner:DEFAULT_LABELS.partner, shared:DEFAULT_LABELS.shared };
+    if(!o || typeof o !== 'object') return out;
+    WHO.forEach(function(k){
+      var v = o[k];
+      if(typeof v === 'string' && v.trim()) out[k] = v.trim().slice(0, 10) || DEFAULT_LABELS[k];
+    });
+    return out;
+  }
+  function normLedger(a){
+    if(!Array.isArray(a)) return null;
+    return a.filter(function(x){ return x && typeof x === 'object'; }).map(function(x, i){
+      var cat = String(x.cat != null ? x.cat : (x.category != null ? x.category : '')).trim();
+      var kind = normKind(x.kind != null ? x.kind : (x.type != null ? x.type : x.group), cat);
+      if(!cat || LEDGER[kind].cats.indexOf(cat) < 0){
+        if(!cat) cat = LEDGER[kind].cats[0];
+      }
+      var pay = 'cash';
+      var pv = String(x.pay != null ? x.pay : (x.method != null ? x.method : '')).trim();
+      if(kind === 'expense' && (pv === 'card' || /신용|신카|card/i.test(pv))) pay = 'card';
+      var inst = Math.round(num(x.inst != null ? x.inst : (x.months != null ? x.months : 0)));
+      if(!(inst >= 2 && inst <= 12)) inst = 0;
+      if(pay !== 'card') inst = 0;
+      return {
+        id: String(x.id || ('e' + i)),
+        date: isIso(x.date) ? x.date : (isIso(x.day) ? x.day : (isIso(x.iso) ? x.iso : '')),
+        kind: kind,
+        cat: cat,
+        who: normWho(x.who != null ? x.who : (x.user != null ? x.user : x.by)),
+        amount: Math.round(num(x.amount != null ? x.amount : (x.price != null ? x.price : x.value))),
+        memo: String(x.memo != null ? x.memo : (x.note != null ? x.note : (x.desc != null ? x.desc : ''))),
+        pay: pay,
+        inst: inst
+      };
+    });
+  }
+  function normCardAdj(o){
+    if(!o || typeof o !== 'object' || Array.isArray(o)) return null;
+    var out = {};
+    Object.keys(o).forEach(function(k){
+      if(!/^\d{4}-\d{2}$/.test(k)) return;
+      var v = o[k];
+      var amt = null, memo = '';
+      if(v && typeof v === 'object'){
+        amt = (v.amount != null && v.amount !== '' && isFinite(Number(v.amount))) ? Math.round(Number(v.amount)) : null;
+        memo = String(v.memo || '');
+      }else if(v != null && v !== '' && isFinite(Number(v))){
+        amt = Math.round(Number(v));
+      }
+      if(amt !== null) out[k] = { amount: amt, memo: memo };
+    });
+    return out;
+  }
+  function normCardCfg(o){
+    if(!o || typeof o !== 'object' || Array.isArray(o)) return null;
+    var s = Math.round(num(o.start)), e = Math.round(num(o.end));
+    if(!(s >= 1 && s <= 28)) s = 1;
+    if(!(e === 0 || (e >= 1 && e <= 31))) e = 0;
+    return { start: s, end: e };
+  }
   function normalizeState(p){
     var base = blankState();
     if(!p || typeof p !== 'object') return base;
@@ -1632,13 +1901,18 @@
     base.meals = normMeals(p.meals != null ? p.meals : (p.days != null ? p.days : p.diet), ref);
     base.inventory = normInv(p.inventory || p.stock || p.fridge, '', ref) || [];
     base.shopping = normShop(p.shopping || p.shop) || [];
+    base.ledger = normLedger(p.ledger || p.entries || p.book) || [];
+    base.cardAdj = normCardAdj(p.cardAdj) || {};
+    base.cardCfg = normCardCfg(p.cardCfg) || { start: 1, end: 0 };
+    base.userLabels = normLabels(p.userLabels || p.labels);
     if(typeof p.dedupe === 'boolean') base.dedupe = p.dedupe;
     if(p.ui && typeof p.ui === 'object'){
       base.ui = {
         tab: TABS.indexOf(p.ui.tab) >= 0 ? p.ui.tab : 'meal',
         cat: typeof p.ui.cat === 'string' ? p.ui.cat : '전체',
         q: typeof p.ui.q === 'string' ? p.ui.q : '',
-        selDay: isIso(p.ui.selDay) ? p.ui.selDay : ''
+        selDay: isIso(p.ui.selDay) ? p.ui.selDay : '',
+        who: WHO.indexOf(p.ui.who) >= 0 ? p.ui.who : ''
       };
     }
     return base;
@@ -1648,6 +1922,11 @@
       var raw = localStorage.getItem(CONFIG.key);
       if(raw){
         var p = JSON.parse(raw);
+        /* 예전 백업 파일을 통째로 붙여 넣은 경우도 받아 준다 */
+        if(p && typeof p === 'object' && p.data && typeof p.data === 'object' &&
+           p.inventory == null && p.meals == null && p.orders == null){
+          p = p.data;
+        }
         if(p && typeof p === 'object') return normalizeState(p);
       }
     }catch(e){}
@@ -1735,6 +2014,32 @@
       addCat(i.cat, i.price);
     });
 
+    /* ---- 가계부: 직접 적은 내역 + 장보기 자동 집계 ---- */
+    var led = S.ledger.filter(function(e){ return inRange(e.date, from, to); });
+    var ledExp = led.filter(function(e){ return e.kind === 'expense'; });
+    var ledGrocery = sumBy(ledExp.filter(function(e){ return e.cat === '장보기'; }), function(e){ return e.amount; });
+    var dining = sumBy(ledExp.filter(function(e){ return e.cat === '외식'; }), function(e){ return e.amount; });
+    var income = sumBy(led.filter(function(e){ return e.kind === 'income'; }), function(e){ return e.amount; });
+    var saving = sumBy(led.filter(function(e){ return e.kind === 'save'; }), function(e){ return e.amount; });
+    var grocery = purchase + ledGrocery;
+    var expense = purchase + sumBy(ledExp, function(e){ return e.amount; });
+    var spend = {};
+    function addSpend(cat, amt, n){
+      var key = cat || '기타';
+      if(!spend[key]) spend[key] = { sum:0, n:0 };
+      spend[key].sum += num(amt);
+      spend[key].n += (n == null ? 1 : n);
+    }
+    if(purchase > 0) addSpend('장보기', purchase, orders.length + directItems.length);
+    ledExp.forEach(function(e){ addSpend(e.cat, e.amount, 1); });
+    var park = 0, parkCount = 0;
+    S.ledger.forEach(function(e){
+      if(e.kind === 'save' && e.cat === '비상금'){ park += num(e.amount); parkCount++; }
+    });
+    var byWho = { me:0, partner:0, shared:0 };
+    byWho.me += purchase;
+    ledExp.forEach(function(e){ byWho[normWho(e.who)] += num(e.amount); });
+
     var held = S.inventory.filter(function(i){ return !i.used; });
     var stockValue = sumBy(held, function(i){ return i.price; });
 
@@ -1748,6 +2053,8 @@
     return {
       from:from, to:to, orders:orders,
       online:online, direct:direct, directItems:directItems, directCount:directItems.length, purchase:purchase,
+      ledger:led, ledgerExpenses:ledExp, income:income, saving:saving, park:park, parkCount:parkCount,
+      grocery:grocery, dining:dining, expense:expense, spend:spend, ledGrocery:ledGrocery, byWho:byWho,
       usedCost:usedCost, usedCount:usedItems.length, undatedUsed:undatedUsed,
       mealCount:mealCount, doneCount:doneCount, rate:rate,
       perMeal:perMeal, perPerson:perPerson, usedPerMeal:usedPerMeal, basis:basis,
@@ -1790,7 +2097,7 @@
   /* ================= 렌더: 히어로 / 진행 ================= */
   function renderHero(r, a){
     $('hRange').textContent = r.label;
-    $('hPill').textContent = '🛒 주문 ' + a.orders.length + '건 · 직접 입력 ' + a.directCount + '건';
+    $('hPill').textContent = '🛒 주문 ' + a.orders.length + '건 · 장보기 품목 ' + a.directCount + '건';
 
     if(S.period === 'month'){
       $('hLb1').textContent = '월 구매액';
@@ -1979,12 +2286,12 @@
         mealRowsHtml(sel, selList) +
       '</div>' +
       '<div class="kpi4">' +
-        metricBox('월 총 구매액', fmt(a.purchase), '원', '쿠팡 ' + won(a.online) + ' · 직접 ' + won(a.direct)) +
+        metricBox('월 총 구매액', fmt(a.purchase), '원', '쿠팡 ' + won(a.online) + ' · 냉장고 ' + won(a.direct)) +
         metricBox('월 소진비용', fmt(a.usedCost), '원', '소진 ' + a.usedCount + '품목' + (a.undatedUsed ? (' · 날짜 미입력 ' + a.undatedUsed) : '')) +
         metricBox('월 완료 끼니', a.doneCount, '끼', '계획 ' + a.mealCount + '끼 · 진행 ' + a.rate + '%') +
         metricBox('끼니당 평균 식대', fmt(a.perMeal), '원', '1인 ' + won(a.perPerson) + ' · ' + (a.basis === 'purchase' ? '월 구매 기준' : '재고 기준')) +
       '</div>' +
-      chartCard(a.byCat, '카테고리별 지출', (mo + 1) + '월 구매 기준');
+      chartCard(a.byCat, '식재료 카테고리별 지출', (mo + 1) + '월 구매 기준');
     return html;
   }
   function yearHtml(r, a){
@@ -2014,7 +2321,7 @@
         '<div class="ylegend"><span><i class="lp"></i>구매액</span><span><i class="lu"></i>소진비용</span></div>' +
       '</div>' +
       '<div class="kpi4">' +
-        metricBox('연간 총 구매비용', fmt(a.purchase), '원', '쿠팡 ' + won(a.online) + ' · 직접 ' + won(a.direct)) +
+        metricBox('연간 총 구매비용', fmt(a.purchase), '원', '쿠팡 ' + won(a.online) + ' · 냉장고 ' + won(a.direct)) +
         metricBox('총 소진비용', fmt(a.usedCost), '원', '소진 ' + a.usedCount + '품목') +
         metricBox('총 완료 끼니', a.doneCount, '끼', '계획 ' + a.mealCount + '끼 · 진행 ' + a.rate + '%') +
         metricBox('월 평균 식비', fmt(Math.round(a.purchase / 12)), '원', '연간 구매비용 ÷ 12개월') +
@@ -2126,30 +2433,214 @@
   }
 
   /* ================= 렌더: 가계부 ================= */
+  function whoLabel(k){ return (S.userLabels && S.userLabels[k]) || DEFAULT_LABELS[k] || ''; }
+  function entryRowHtml(e){
+    var wl = normWho(e.who);
+    var badge = wl === 'me' ? '' : '<span class="wbadge">' + esc(whoLabel(wl)) + '</span>';
+    var sub = [];
+    if(e.memo) sub.push(e.memo);
+    if(e.kind === 'expense') sub.push(e.pay === 'card' ? ('신용카드' + (e.inst >= 2 ? ' ' + e.inst + '개월 할부' : ' 일시불')) : '체크·현금·이체');
+    var sign = e.kind === 'income' ? '+' : (e.kind === 'expense' ? '−' : '');
+    var cls = e.kind === 'income' ? ' in' : (e.kind === 'save' ? ' sv' : '');
+    return '<div class="erow" data-act="edit-entry" data-id="' + esc(e.id) + '" role="button" tabindex="0">' +
+      '<span class="edt">' + esc(mdShort(e.date)) + '</span>' +
+      '<div class="ebody"><p class="ecat">' + esc(e.cat) + badge + '</p>' +
+        (sub.length ? '<p class="ememo">' + esc(sub.join(' · ')) + '</p>' : '') + '</div>' +
+      '<span class="eamt' + cls + '">' + sign + fmt(Math.abs(e.amount)) + '원</span></div>';
+  }
+  /* ---- 신카 청구 예정: 정산 기간 · 할부 ---- */
+  function daysIn(y, m0){ return new Date(y, m0 + 1, 0).getDate(); }
+  function shiftMonth(y, m0, n){
+    var idx = y * 12 + m0 + n;
+    var yy = Math.floor(idx / 12), mm = ((idx % 12) + 12) % 12;
+    return { y: yy, m0: mm };
+  }
+  function billWindow(y, m0){
+    var cfg = S.cardCfg || { start:1, end:0 };
+    var pm = shiftMonth(y, m0, -1);
+    var s = Math.min(Math.max(1, Math.round(num(cfg.start))), daysIn(pm.y, pm.m0));
+    var from = isoOf(new Date(pm.y, pm.m0, s));
+    var e = Math.round(num(cfg.end));
+    var to;
+    if(e === 0) to = isoOf(new Date(pm.y, pm.m0, daysIn(pm.y, pm.m0)));
+    else if(e >= s) to = isoOf(new Date(pm.y, pm.m0, Math.min(e, daysIn(pm.y, pm.m0))));
+    else to = isoOf(new Date(y, m0, Math.min(e, daysIn(y, m0))));
+    return { from:from, to:to };
+  }
+  function billMonthKey(y, m0){ return y + '-' + pad(m0 + 1); }
+  /* 사용한 날짜가 어느 달 청구서로 들어가는지 */
+  function billKeyOf(iso){
+    var d = parseIso(iso);
+    if(!d) return null;
+    for(var off = 0; off <= 2; off++){
+      var m = shiftMonth(d.getFullYear(), d.getMonth(), off);
+      var w = billWindow(m.y, m.m0);
+      if(iso >= w.from && iso <= w.to) return m;
+    }
+    return null;
+  }
+  function billSummary(y, m0){
+    var idx = y * 12 + m0;
+    var w = billWindow(y, m0);
+    var out = { y:y, m0:m0, from:w.from, to:w.to, key:billMonthKey(y, m0), one:[], inst:[], total:0, usage:0,
+                adjust:null, who:{ me:0, partner:0, shared:0 } };
+    S.ledger.forEach(function(e){
+      if(e.kind !== 'expense' || e.pay !== 'card' || !isIso(e.date)) return;
+      var b = billKeyOf(e.date);
+      if(!b) return;
+      var bi = b.y * 12 + b.m0;
+      var n = (e.inst >= 2) ? Math.min(12, e.inst) : 1;
+      var per = n > 1 ? Math.floor(e.amount / n) : e.amount;
+      for(var k = 1; k <= n; k++){
+        if(bi + k - 1 !== idx) continue;
+        var amt = (n > 1 && k === n) ? (e.amount - per * (n - 1)) : per;
+        if(n > 1) out.inst.push({ e:e, k:k, n:n, amt:amt });
+        else out.one.push({ e:e, amt:amt });
+        out.total += amt;
+        out.who[normWho(e.who)] += amt;
+      }
+      if(bi === idx) out.usage++;
+    });
+    var adj = S.cardAdj[out.key];
+    if(adj && adj.amount != null && isFinite(Number(adj.amount))) out.adjust = Math.round(Number(adj.amount));
+    return out;
+  }
+  function renderCardBill(){
+    var t = parseIso(todayIso()) || new Date();
+    var b = billSummary(t.getFullYear(), t.getMonth());
+    $('cbMonth').textContent = (b.m0 + 1) + '월';
+    var oneSum = sumBy(b.one, function(x){ return x.amt; });
+    var instSum = sumBy(b.inst, function(x){ return x.amt; });
+    var shown = b.adjust != null ? b.adjust : b.total;
+    var html = '<div class="billbig"><span class="v" id="cbTotal">' + fmt(shown) + '<span class="u">원</span></span>' +
+      '<div class="cap" id="cbCap">정산 ' + esc(mdShort(b.from)) + ' – ' + esc(mdShort(b.to)) + ' 신카 사용분 ' + b.usage + '건</div>' +
+      '<div class="who-sum" id="cbWho">' + WHO.map(function(k){
+        return '<span>' + esc(whoLabel(k)) + ' <b>' + won(b.who[k] || 0) + '</b></span>';
+      }).join('') + '</div></div>';
+    var nx = shiftMonth(t.getFullYear(), t.getMonth(), 1);
+    var nb = billSummary(nx.y, nx.m0);
+    html += '<div class="billrows">' +
+      '<div class="billrow"><span>일시불</span><span class="v">' + (b.one.length ? b.one.length + '건 · ' + won(oneSum) : '없음') + '</span></div>' +
+      '<div class="billrow"><span>할부 이번 달 분</span><span class="v">' + (b.inst.length ? b.inst.length + '건 · ' + won(instSum) : '없음') + '</span></div>' +
+      '<div class="billrow"><span>다음 달(' + (nb.m0 + 1) + '월) 예상</span><span class="v" id="cbNext">' + won(nb.total) + '</span></div>' +
+      '</div>';
+    if(!b.one.length && !b.inst.length){
+      html += '<p class="billadj">이번 청구에 들어갈 신카 지출이 없어요. 이번 달에 신카로 쓴 금액은 다음 달 청구서로 넘어가요.</p>';
+    }
+    if(b.inst.length){
+      html += '<div class="billinst">' + b.inst.map(function(x){
+        return '<div class="bi"><span>' + esc(x.e.cat + (x.e.memo ? ' · ' + x.e.memo : '')) + '</span><b>' + x.n + '개월 중 ' + x.k + '회 · ' + won(x.amt) + '</b></div>';
+      }).join('') + '</div>';
+    }
+    if(b.adjust != null){
+      var diff = b.adjust - b.total;
+      html += '<div class="billadj">계산 ' + won(b.total) + ' · 보정 ' + (diff >= 0 ? '+' : '−') + won(Math.abs(diff)) + '</div>';
+    }
+    var stOpts = '';
+    for(var d = 1; d <= 28; d++) stOpts += '<option value="' + d + '"' + (num(S.cardCfg.start) === d ? ' selected' : '') + '>' + d + '</option>';
+    var enOpts = '';
+    for(var e2 = 0; e2 <= 31; e2++){
+      enOpts += '<option value="' + e2 + '"' + (num(S.cardCfg.end) === e2 ? ' selected' : '') + '>' + (e2 === 0 ? '말일' : e2) + '</option>';
+    }
+    html += '<div class="cfgline"><span>정산 기간</span><span>전월</span><select id="cbStart" aria-label="정산 시작일">' + stOpts + '</select>' +
+      '<span>일 ~</span><select id="cbEnd" aria-label="정산 마감일">' + enOpts + '</select></div>';
+    html += '<div class="adjline"><input id="cbAdj" type="number" inputmode="numeric" min="0" step="1" placeholder="실제 청구액 보정 (선택)" value="' + (b.adjust != null ? b.adjust : '') + '">' +
+      '<span class="un">원</span><button type="button" id="cbAdjClear" data-act="bill-clear"' + (b.adjust != null ? '' : ' hidden') + '>지우기</button></div>';
+    $('cardBillBody').innerHTML = html;
+  }
   function renderLedger(r, a){
     $('lPeriod').textContent = PERIODS[S.period] + ' · ' + r.label;
-    $('lTotal').innerHTML = fmt(a.purchase) + '<span class="u">원</span>';
-    $('lSplit').textContent = '쿠팡 주문 ' + won(a.online) + ' + 직접 입력 ' + won(a.direct);
-    $('lUsed').innerHTML = fmt(a.usedCost) + '<span class="u">원</span>';
-    $('lUsedCap').innerHTML = '냉장고에 남은 재고<br>' + won(a.stockValue) + ' · ' + a.heldCount + '/' + a.stockCount + '품목 보유' +
-      (a.undatedUsed ? '<br>날짜 없는 소진 ' + a.undatedUsed + '품목 제외' : '');
-    $('lPer').innerHTML = fmt(a.perMeal) + '<span class="u">원</span>';
-    $('lPerCap').innerHTML = (a.basis === 'purchase' ? '기간 구매액' : '재고 금액') + ' ÷ 계획 ' + a.mealCount + '끼<br>1인당 ' + won(a.perPerson);
-    $('lUsedPer').innerHTML = fmt(a.usedPerMeal) + '<span class="u">원</span>';
-    $('lUsedPerCap').textContent = '소진비용 ÷ 완료 ' + a.doneCount + '끼 · 1인당 ' + won(Math.round(a.usedPerMeal / CONFIG.servings));
+    $('lTotal').innerHTML = fmt(a.expense) + '<span class="u">원</span>';
+    var other = a.expense - a.grocery - a.dining;
+    $('lSplit').textContent = '장보기 ' + won(a.grocery) + ' · 외식 ' + won(a.dining) + (other > 0 ? ' · 그 외 ' + won(other) : '');
+    $('lIncome').innerHTML = fmt(a.income) + '<span class="u">원</span>';
+    $('lIncomeCap').textContent = '수입 · 이자수익';
+    $('lSave').innerHTML = fmt(a.saving) + '<span class="u">원</span>';
+    var net = a.income - a.expense;
+    $('lNet').innerHTML = (net < 0 ? '−' : '') + fmt(Math.abs(net)) + '<span class="u">원</span>';
+    $('lNetCap').textContent = '총 수입 − 총 지출' + (net < 0 ? ' · 지출이 더 많아요' : (net > 0 ? ' · 남은 돈' : ''));
+    $('lWho').innerHTML = WHO.map(function(k){
+      return '<span>' + esc(whoLabel(k)) + ' <b>' + won(a.byWho[k] || 0) + '</b></span>';
+    }).join('') + '<button type="button" class="whoedit" data-act="edit-who" aria-label="사용자 이름 바꾸기">✏️ <span>이름</span></button>';
 
-    var list = a.directItems.slice().sort(function(x, y){ return String(y.date).localeCompare(String(x.date)); });
-    if(!list.length){
-      $('directList').innerHTML = '<p class="empty" style="margin:14px 0 4px">이 기간에 직접 입력한 구매가 없어요.<br>아래 버튼으로 사 온 품목을 적으면 냉장고 재고에도 함께 들어가요.</p>';
+    /* 카테고리별 지출 */
+    var keys = Object.keys(a.spend).sort(function(x, y){ return a.spend[y].sum - a.spend[x].sum; });
+    var max = 0;
+    keys.forEach(function(k){ max = Math.max(max, a.spend[k].sum); });
+    var cls = ['c1', 'c2', 'c3'];
+    $('lChartCap').textContent = keys.length
+      ? (PERIODS[S.period] + ' 지출 · ' + keys.length + '개 분류 · 합계 ' + won(a.expense))
+      : (PERIODS[S.period] + ' 지출 기록 없음');
+    if(!keys.length){
+      $('lChartRows').innerHTML = '<p class="empty" style="margin:12px 0 2px">이 기간에 지출 기록이 없어요.<br>아래 “+ 내역 추가”로 바로 적을 수 있어요.</p>';
     }else{
-      $('directList').innerHTML = '<p class="muted" style="margin:0 16px 9px">직접 입력 ' + list.length + '건 · ' + won(a.direct) + '</p>' +
-        list.map(function(i){
-          return '<div class="lrow" data-act="edit-inv" data-id="' + esc(i.id) + '" style="grid-template-columns:1fr auto">' +
-            '<div><p class="n">' + esc(i.name) + '</p>' +
-            '<p class="m">' + (isIso(i.date) ? esc(mdShort(i.date)) : '날짜 미입력') + ' · ' + esc(i.from || '구매처 미입력') + ' · ' + esc(i.cat) + ' · 남은 ' + esc(fmtQty(i.remainQty, i.unit)) + '</p></div>' +
-            '<span class="a">' + won(i.price) + '</span>' +
-            '</div>';
-        }).join('');
+      $('lChartRows').innerHTML = keys.map(function(k, i){
+        var v = a.spend[k].sum;
+        var w = max ? Math.round(v / max * 100) : 0;
+        var pc = a.expense ? Math.round(v / a.expense * 100) : 0;
+        return '<div class="crow"><span class="cl">' + esc(k) + '</span>' +
+          '<span class="track"><i class="' + cls[i % 3] + '" style="width:' + w + '%"></i></span>' +
+          '<span class="cv"><b>' + won(v) + '</b><i>' + pc + '%</i></span></div>';
+      }).join('');
+    }
+
+    /* 신카 청구 예정 */
+    renderCardBill();
+
+    /* 비상금 파킹 누적 */
+    $('lParkTotal').innerHTML = fmt(a.park) + '<span class="u">원</span>';
+    $('lParkCap').textContent = '전체 기간 누적 · ' + a.parkCount + '건' +
+      (a.saving ? (' · 이 기간 파킹 ' + won(a.saving)) : '');
+
+    /* 내역 */
+    var entries = a.ledger.slice().sort(function(x, y){
+      var d = String(y.date).localeCompare(String(x.date));
+      return d || String(y.id).localeCompare(String(x.id));
+    });
+    var inc = entries.filter(function(e){ return e.kind === 'income'; }).length;
+    var sav = entries.filter(function(e){ return e.kind === 'save'; }).length;
+    $('lCount').textContent = entries.length ? (entries.length + '건 · 지출 ' + (entries.length - inc - sav) + (inc ? ' · 수입 ' + inc : '') + (sav ? ' · 파킹 ' + sav : '')) : '0건';
+
+    /* 지출자 필터 */
+    var counts = { '':entries.length, me:0, partner:0, shared:0 };
+    entries.forEach(function(e){ counts[normWho(e.who)]++; });
+    var opts = [['', '전체']].concat(WHO.map(function(k){ return [k, whoLabel(k)]; }));
+    $('whoChips').innerHTML = opts.map(function(o){
+      var on = (S.ui.who || '') === o[0] ? ' on' : '';
+      return '<button class="chip' + on + '" data-act="who-filter" data-who="' + o[0] + '">' +
+        esc(o[1]) + ' ' + (counts[o[0]] || 0) + '</button>';
+    }).join('');
+    var shown = S.ui.who ? entries.filter(function(e){ return normWho(e.who) === S.ui.who; }) : entries;
+    if(!entries.length){
+      $('entryList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 적은 내역이 없어요.<br>아래 버튼으로 수입·지출을 추가하면 카테고리별 지출에 바로 반영돼요.</p>';
+    }else if(!shown.length){
+      $('entryList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 ' + esc(whoLabel(S.ui.who)) + '로 적은 내역이 없어요.</p>';
+    }else{
+      $('entryList').innerHTML = shown.map(entryRowHtml).join('');
+    }
+
+    /* 장보기 자동 집계 (냉장고 · 주문) */
+    var autos = [];
+    a.orders.forEach(function(o){
+      autos.push({ date:o.date, name:(o.store || '쿠팡') + ' 주문',
+        meta:(o.no && o.no !== '—' ? '주문 ' + o.no : '주문번호 확인 안 함') + (o.items ? ' · ' + o.items + '건 담음' : ''),
+        amt:o.foodAmount });
+    });
+    a.directItems.forEach(function(i){
+      autos.push({ date:i.date, name:i.name, meta:storeLabel(i) + ' · ' + (i.cat || '기타'), amt:i.price, invId:i.id });
+    });
+    autos.sort(function(x, y){ return String(y.date).localeCompare(String(x.date)); });
+    if(!autos.length){
+      $('directList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 냉장고·주문에서 잡힌 장보기 기록이 없어요.</p>';
+    }else{
+      $('directList').innerHTML = autos.map(function(x){
+        var inner = '<div><p class="n">' + esc(x.name) + '</p>' +
+          '<p class="m">' + esc(mdShort(x.date)) + ' · ' + esc(x.meta) + '</p></div>' +
+          '<span class="a">' + won(x.amt) + '</span>';
+        return x.invId
+          ? '<div class="lrow" data-act="edit-inv" data-id="' + esc(x.invId) + '" style="grid-template-columns:1fr auto">' + inner + '</div>'
+          : '<div class="lrow" style="grid-template-columns:1fr auto">' + inner + '</div>';
+      }).join('');
     }
   }
 
@@ -2174,47 +2665,129 @@
       '</div>' +
       '</div>';
   }
+  function storeGroups(r){
+    var map = {}, list = [];
+    function get(name){
+      var nm = String(name == null ? '' : name).trim() || '구매처 미입력';
+      if(!map[nm]){ map[nm] = { name:nm, orders:[], items:[], amount:0, food:0 }; list.push(map[nm]); }
+      return map[nm];
+    }
+    S.orders.forEach(function(o){
+      if(!inRange(o.date, r.from, r.to)) return;
+      var g = get(o.store || '쿠팡');
+      g.orders.push(o);
+      g.amount += num(o.amount);
+      g.food += num(o.foodAmount);
+    });
+    S.inventory.forEach(function(i){
+      if(i.src === 'online' || !inRange(i.date, r.from, r.to)) return;
+      var g = get(storeLabel(i));
+      g.items.push(i);
+      g.amount += num(i.price);
+      g.food += num(i.price);
+    });
+    list.sort(function(x, y){ return (y.food - x.food) || (y.amount - x.amount); });
+    return list;
+  }
+  function storeCardHtml(g, total){
+    var pc = total ? Math.round(g.food / total * 100) : 0;
+    var cnt = [];
+    if(g.orders.length) cnt.push('주문 ' + g.orders.length + '건');
+    if(g.items.length) cnt.push('품목 ' + g.items.length + '건');
+    var memo = (g.amount !== g.food) ? ('결제 ' + won(g.amount)) : (g.items.length ? '냉장고에 넣은 구매' : '');
+    return '<div class="storecard">' +
+      '<div class="sc-h"><span class="sc-n">' + esc(g.name) + '</span><span class="sc-c">' + esc(cnt.join(' · ')) + '</span></div>' +
+      '<div class="sc-v">' + fmt(g.food) + '<span class="u">원</span></div>' +
+      '<div class="sc-bar"><i style="width:' + pc + '%"></i></div>' +
+      '<div class="sc-m">' + esc(pc + '%' + (memo ? ' · ' + memo : '')) + '</div>' +
+      '</div>';
+  }
+  function storeItemRow(i){
+    return '<div class="lrow" data-act="edit-inv" data-id="' + esc(i.id) + '" style="grid-template-columns:1fr auto">' +
+      '<div><p class="n">' + esc(i.name) + '</p>' +
+      '<p class="m">' + esc(mdShort(i.date)) + ' · ' + esc(storeLabel(i)) + ' · ' + esc(i.cat) + '</p></div>' +
+      '<span class="a">' + won(i.price) + '</span></div>';
+  }
+  function ratioHtml(a, r){
+    var total = a.grocery + a.dining;
+    if(!(total > 0)){
+      return '<p class="empty" style="margin:14px 0 2px">이 기간에는 장보기·외식 기록이 없어요.<br>가계부에 외식을 적으면 집밥과 비교한 비율이 보여요.</p>';
+    }
+    var gp = Math.round(a.grocery / total * 100);
+    var dp = 100 - gp;
+    return '<div class="ratio"><i class="rh" style="width:' + gp + '%"></i><i class="rd" style="width:' + dp + '%"></i></div>' +
+      '<div class="ratio-legend">' +
+        '<span><i class="lh"></i>집밥(장보기) <b>' + gp + '%</b> · ' + won(a.grocery) + '</span>' +
+        '<span><i class="ld"></i>외식 <b>' + dp + '%</b> · ' + won(a.dining) + '</span>' +
+      '</div>' +
+      '<p class="ratio-total">장보기 ' + won(a.grocery) + ' + 외식 ' + won(a.dining) + ' = ' + won(total) + ' · ' + esc(PERIODS[S.period] + ' ' + r.label) + '</p>';
+  }
   function renderSummary(r, a){
-    var periodOrders = S.orders.filter(function(o){ return inRange(o.date, r.from, r.to); });
-    var undated = S.orders.filter(function(o){ return !isIso(o.date); });
-    var list = periodOrders.concat(undated);
-    $('sumSub').textContent = PERIODS[S.period] + ' ' + list.length + '건' + (undated.length ? (' · 날짜 미상 ' + undated.length) : '');
+    var groups = storeGroups(r);
+    var totalFood = sumBy(groups, function(g){ return g.food; });
+    var oc = sumBy(groups, function(g){ return g.orders.length; });
+    var ic = sumBy(groups, function(g){ return g.items.length; });
+    $('sumSub').textContent = groups.length
+      ? (groups.length + '곳 · 주문 ' + oc + '건' + (ic ? ' · 품목 ' + ic + '건' : ''))
+      : (PERIODS[S.period] + ' 0건');
+    $('sumHint').textContent = groups.length
+      ? ('이 기간에 산 곳 ' + groups.length + '곳 · 식품 합계 ' + won(totalFood))
+      : '이 기간에 실제로 산 곳끼리 묶어 보여드려요.';
 
-    if(!list.length){
-      $('orderList').innerHTML = '<p class="empty">이 기간에는 쿠팡 주문이 없어요.<br>위에서 기간을 바꾸거나 ◀ ▶ 로 이동해 보세요.</p>';
+    if(!groups.length){
+      $('storeCards').innerHTML = '<p class="empty" style="grid-column:1 / -1;margin:6px 2px">이 기간에는 구매 기록이 없어요.<br>위에서 기간을 바꾸거나 ◀ ▶ 로 이동해 보세요.</p>';
+      $('storeOrders').innerHTML = '';
     }else{
-      $('orderList').innerHTML = list.map(orderCard).join('');
+      $('storeCards').innerHTML = groups.map(function(g){ return storeCardHtml(g, totalFood); }).join('');
+      var html = '';
+      groups.forEach(function(g){
+        var parts = [];
+        if(g.orders.length) parts.push('주문 ' + g.orders.length + '건 · 결제 ' + won(g.amount));
+        if(g.items.length) parts.push('냉장고 품목 ' + g.items.length + '건 · ' + won(sumBy(g.items, function(i){ return i.price; })));
+        html += '<div class="storehead"><span class="sn">' + esc(g.name) + '</span><span class="ss">' + esc(parts.join(' · ')) + '</span></div>';
+        if(g.orders.length) html += g.orders.map(orderCard).join('');
+        if(g.items.length) html += '<div class="ledgerlist">' + g.items.map(storeItemRow).join('') + '</div>';
+      });
+      var undated = S.orders.filter(function(o){ return !isIso(o.date); });
+      if(undated.length){
+        html += '<div class="storehead"><span class="sn">날짜 미상</span><span class="ss">' + undated.length + '건 · 기간 합계에서 빠져요</span></div>' + undated.map(orderCard).join('');
+      }
+      $('storeOrders').innerHTML = html;
     }
 
-    var keys = Object.keys(a.byCat);
+    /* 식재료 세부 카테고리 */
+    var keys = Object.keys(a.byCat).sort(function(x, y){ return a.byCat[y].sum - a.byCat[x].sum; });
     var n = 0;
     keys.forEach(function(k){ n += a.byCat[k].n; });
     $('chartCap').textContent = keys.length
       ? (PERIODS[S.period] + ' 구매 기준 · ' + keys.length + '개 분류 · ' + n + '개 품목')
       : (PERIODS[S.period] + ' 구매 기록 없음');
-
     if(!keys.length){
       $('chartRows').innerHTML = '<p class="empty" style="margin:12px 0 2px">이 기간에 분류할 수 있는 구매 기록이 없어요.<br>품목에 구매 날짜가 없으면 기간별 지출에 잡히지 않아요.</p>';
-      return;
+    }else{
+      var max = 0;
+      keys.forEach(function(k){ max = Math.max(max, a.byCat[k].sum); });
+      var cls = ['c1', 'c2', 'c3'];
+      $('chartRows').innerHTML = keys.map(function(k, i){
+        var v = a.byCat[k].sum;
+        var w = max ? Math.round(v / max * 100) : 0;
+        return '<div class="crow">' +
+          '<span class="cl">' + esc(k) + '</span>' +
+          '<span class="track"><i class="' + cls[i % 3] + '" style="width:' + w + '%"></i></span>' +
+          '<span class="cv"><b>' + won(v) + '</b></span>' +
+          '</div>';
+      }).join('');
     }
-    var max = 0;
-    keys.forEach(function(k){ max = Math.max(max, a.byCat[k].sum); });
-    var cls = ['c1', 'c2', 'c3'];
-    $('chartRows').innerHTML = keys.map(function(k, i){
-      var v = a.byCat[k].sum;
-      var w = max ? Math.round(v / max * 100) : 0;
-      return '<div class="crow">' +
-        '<span class="cl">' + esc(k) + '</span>' +
-        '<span class="track"><i class="' + cls[i % 3] + '" style="width:' + w + '%"></i></span>' +
-        '<span class="cv">' + won(v) + '</span>' +
-        '</div>';
-    }).join('');
+
+    /* 집밥 vs 외식 */
+    $('ratioSub').textContent = PERIODS[S.period] + ' · ' + r.label;
+    $('ratioBody').innerHTML = ratioHtml(a, r);
   }
 
   /* ================= 전체 렌더 ================= */
   function isBlank(){
     return !S.inventory.length && !S.orders.length && !S.shopping.length &&
-           !Object.keys(S.meals).length;
+           !S.ledger.length && !Object.keys(S.meals).length;
   }
   function updateChrome(){
     var blank = isBlank();
@@ -2310,7 +2883,7 @@
 
   /* ================= 끼니 · 재고 모달 ================= */
   var mealEdit = null, invEdit = null, ivLastUnit = null;
-  var STORE_CHIPS = ['쿠팡', '이마트', '컬리', '동네마트', '편의점', '직접 추가'];
+  var STORE_CHIPS = ['쿠팡', '네이버', '지마켓', '알리', '동네마트', '편의점'];
 
   function invById(id){
     for(var i = 0; i < S.inventory.length; i++){ if(S.inventory[i].id === id) return S.inventory[i]; }
@@ -2556,6 +3129,127 @@
     toast('재고에서 지웠어요');
   }
 
+  /* ================= 가계부 내역 모달 ================= */
+  var entryEdit = null, entryWho = 'me', entryKind = 'expense';
+  function ledgerById(id){
+    for(var i = 0; i < S.ledger.length; i++){ if(S.ledger[i].id === id) return S.ledger[i]; }
+    return null;
+  }
+  function entryKey(e){ return [e.date, e.kind, nameKey(e.cat), Math.round(num(e.amount)), nameKey(e.memo), normWho(e.who)].join('|'); }
+  function enCatOptions(kind, sel){
+    var cats = LEDGER[kind] ? LEDGER[kind].cats.slice() : [];
+    if(sel && cats.indexOf(sel) < 0) cats.push(sel);
+    return cats.map(function(c){ return '<option' + (c === sel ? ' selected' : '') + '>' + esc(c) + '</option>'; }).join('');
+  }
+  function enInstOptions(sel){
+    return INST_OPTS.map(function(n){
+      return '<option value="' + n + '"' + (num(sel) === n ? ' selected' : '') + '>' + (n === 0 ? '일시불' : n + '개월') + '</option>';
+    }).join('');
+  }
+  function syncEntryForm(){
+    var kind = $('enKind').value;
+    if(!LEDGER[kind]) kind = 'expense';
+    var prev = $('enCat').value;
+    var known = LEDGER[kind].cats.indexOf(prev) >= 0;
+    if(!known && kind !== entryKind) prev = '';   /* 구분이 바뀌면 분류도 새 목록에서 */
+    $('enCat').innerHTML = enCatOptions(kind, prev);
+    $('enCat').value = prev || LEDGER[kind].cats[0];
+    entryKind = kind;
+    $('enPayWrap').hidden = (kind !== 'expense');
+    $('enInstBox').hidden = !(kind === 'expense' && $('enPay').value === 'card');
+  }
+  function openEntry(id){
+    var e = id ? ledgerById(id) : null;
+    entryEdit = e ? e.id : '';
+    $('enTitle').textContent = e ? '내역 수정' : '내역 추가';
+    $('enHint').textContent = e
+      ? '금액·분류·결제수단을 고칠 수 있어요.'
+      : '지출은 실제로 쓴 날짜로 적어 주세요. 결제수단을 신용카드로 두면 청구 예정 카드가 따로 계산해요.';
+    var def = todayIso();
+    var r = currentRange();
+    if(!inRange(def, r.from, r.to)) def = (def > r.to ? r.to : r.from);
+    $('enDate').value = e ? e.date : def;
+    $('enAmount').value = e ? (e.amount || '') : '';
+    $('enKind').innerHTML = LEDGER_KINDS.map(function(k){
+      return '<option value="' + k + '"' + ((e ? e.kind : 'expense') === k ? ' selected' : '') + '>' + esc(LEDGER[k].name) + '</option>';
+    }).join('');
+    $('enKind').value = e ? e.kind : 'expense';
+    $('enCat').innerHTML = enCatOptions(e ? e.kind : 'expense', e ? e.cat : '');
+    $('enCat').value = e ? e.cat : LEDGER[e ? e.kind : 'expense'].cats[0];
+    $('enMemo').value = e ? e.memo : '';
+    $('enPay').value = (e && e.pay === 'card') ? 'card' : 'cash';
+    $('enInst').innerHTML = enInstOptions(e ? e.inst : 0);
+    $('enInst').value = String(e ? e.inst : 0);
+    $('enDel').hidden = !e;
+    entryKind = e ? e.kind : 'expense';
+    entryWho = normWho(e ? e.who : 'me');
+    Array.prototype.forEach.call(document.querySelectorAll('#enWhoRow .cchip'), function(b){
+      var k = b.getAttribute('data-who');
+      b.textContent = whoLabel(k);
+      b.classList.toggle('on', k === entryWho);
+    });
+    syncEntryForm();
+    $('entryBackdrop').hidden = false;
+    setTimeout(function(){ try{ $('enAmount').focus(); }catch(err){} }, 60);
+  }
+  function closeEntry(){ $('entryBackdrop').hidden = true; entryEdit = null; }
+  function saveEntry(){
+    if(entryEdit === null) return;
+    var date = $('enDate').value;
+    if(!isIso(date)){ toast('날짜를 골라 주세요'); return; }
+    var amount = Math.round(num($('enAmount').value));
+    if(!(amount > 0)){ toast('금액을 적어 주세요'); return; }
+    var kind = $('enKind').value;
+    if(!LEDGER[kind]) kind = 'expense';
+    var cat = $('enCat').value || LEDGER[kind].cats[0];
+    var memo = $('enMemo').value.trim();
+    var pay = 'cash', inst = 0;
+    if(kind === 'expense'){
+      pay = ($('enPay').value === 'card') ? 'card' : 'cash';
+      inst = Math.round(num($('enInst').value));
+      if(pay !== 'card' || !(inst >= 2 && inst <= 12)) inst = 0;
+    }
+    var who = WHO.indexOf(entryWho) >= 0 ? entryWho : 'me';
+    var cur = entryEdit ? ledgerById(entryEdit) : null;
+    if(cur){
+      cur.date = date; cur.kind = kind; cur.cat = cat; cur.amount = amount;
+      cur.memo = memo; cur.pay = pay; cur.inst = inst; cur.who = who;
+    }else{
+      S.ledger.push({ id:'e' + Date.now(), date:date, kind:kind, cat:cat, who:who,
+        amount:amount, memo:memo, pay:pay, inst:inst });
+    }
+    closeEntry();
+    renderAll();
+    if(kind === 'save') toast(cur ? '내역을 고쳤어요 · 파킹으로 당힙니다' : '파킹으로 적었어요 · 지출 합계에는 안 들어가요');
+    else if(kind === 'income') toast(cur ? '내역을 고쳤어요' : '수입을 적었어요');
+    else if(pay === 'card' && inst >= 2) toast((cur ? '고쳤어요' : '지출을 적었어요') + ' · ' + inst + '개월 할부로 청구에 잡혀요');
+    else toast(cur ? '내역을 고쳤어요' : '지출을 적었어요');
+  }
+  function delEntry(){
+    var e = entryEdit ? ledgerById(entryEdit) : null;
+    if(!e){ closeEntry(); return; }
+    if(!confirm('이 내역을 지울까요?\n' + e.cat + ' · ' + won(e.amount) + (e.memo ? ' · ' + e.memo : ''))) return;
+    S.ledger = S.ledger.filter(function(x){ return x.id !== e.id; });
+    closeEntry(); renderAll();
+    toast('내역을 지웠어요');
+  }
+
+  /* ================= 사용자 이름(나 · 배우자 · 공용) 설정 ================= */
+  function openLabels(){
+    $('wbMe').value = whoLabel('me');
+    $('wbPartner').value = whoLabel('partner');
+    $('wbShared').value = whoLabel('shared');
+    $('labelBackdrop').hidden = false;
+    setTimeout(function(){ try{ $('wbMe').focus(); }catch(e){} }, 60);
+  }
+  function closeLabels(){ $('labelBackdrop').hidden = true; }
+  function saveLabels(){
+    S.userLabels = normLabels({ me:$('wbMe').value, partner:$('wbPartner').value, shared:$('wbShared').value });
+    closeLabels();
+    renderAll();
+    toast('이름을 바꿨어요 · ' + whoLabel('me') + ' · ' + whoLabel('partner') + ' · ' + whoLabel('shared'));
+  }
+
   /* ================= 데이터: 내보내기 ================= */
   function exportData(){
     return {
@@ -2565,13 +3259,17 @@
       meals: S.meals,
       inventory: S.inventory,
       shopping: S.shopping,
+      ledger: S.ledger,
+      cardAdj: S.cardAdj,
+      cardCfg: S.cardCfg,
+      userLabels: S.userLabels,
       dedupe: S.dedupe
     };
   }
   function exportPayload(){
     return {
       app: 'our-home-table',
-      v: 2,
+      v: 3,
       exportedAt: new Date().toISOString(),
       servings: CONFIG.servings,
       data: exportData()
@@ -2600,7 +3298,7 @@
   /* ================= 데이터: 불러오기 / 빠른 추가 ================= */
   function pickSections(d, defaultDate){
     var ref = isIso(d.cursor) ? d.cursor : (isIso(d.weekStart) ? d.weekStart : todayIso());
-    var out = { any:false, orders:null, meals:null, inventory:null, shopping:null, legacy:0 };
+    var out = { any:false, orders:null, meals:null, inventory:null, shopping:null, ledger:null, cardAdj:null, cardCfg:null, legacy:0 };
     if(d.orders != null){ out.orders = normOrders(d.orders, ref) || []; out.any = true; }
     if(d.meals != null || d.days != null){
       out.meals = normMeals(d.meals != null ? d.meals : d.days, ref);
@@ -2608,6 +3306,10 @@
     }
     if(d.inventory != null){ out.inventory = normInv(d.inventory, defaultDate, ref) || []; out.any = true; }
     if(d.shopping != null){ out.shopping = normShop(d.shopping) || []; out.any = true; }
+    if(d.ledger != null){ out.ledger = normLedger(d.ledger) || []; out.any = true; }
+    if(d.cardAdj != null){ out.cardAdj = normCardAdj(d.cardAdj) || {}; out.any = true; }
+    if(d.cardCfg != null) out.cardCfg = normCardCfg(d.cardCfg);
+    if(d.userLabels != null){ out.userLabels = normLabels(d.userLabels); out.any = true; }
     if(d.offline != null || d.receipts != null){
       var oldOff = d.offline != null ? d.offline : d.receipts;
       out.legacy = Array.isArray(oldOff) ? oldOff.length : 0;
@@ -2622,7 +3324,7 @@
     var d = (p && typeof p === 'object' && p.data && typeof p.data === 'object') ? p.data : p;
     if(!d || typeof d !== 'object' || Array.isArray(d)) throw new Error('데이터를 읽을 수 없어요.');
     var sec = pickSections(d, defaultDate);
-    if(!sec.any) throw new Error('우리집 식탁 데이터 형식이 아니에요. (orders·meals·inventory·shopping 중 하나가 필요해요)');
+    if(!sec.any) throw new Error('우리집 식탁 데이터 형식이 아니에요. (orders·meals·inventory·shopping·ledger 중 하나가 필요해요)');
     sec.cursor = isIso(d.cursor) ? d.cursor : (isIso(d.weekStart) ? d.weekStart : '');
     sec.period = PERIODS[d.period] ? d.period : '';
     sec.dedupe = (typeof d.dedupe === 'boolean') ? d.dedupe : null;
@@ -2630,7 +3332,7 @@
   }
   function sectionCount(sec){
     var n = 0;
-    ['orders', 'inventory', 'shopping'].forEach(function(k){ if(sec[k]) n += sec[k].length; });
+    ['orders', 'inventory', 'shopping', 'ledger'].forEach(function(k){ if(sec[k]) n += sec[k].length; });
     if(sec.meals){ Object.keys(sec.meals).forEach(function(k){ n += sec.meals[k].length; }); }
     return n;
   }
@@ -2642,7 +3344,7 @@
   function mealKey(m){ return slotNorm(m.slot) + '|' + nameKey(m.menu); }
 
   function mergeSections(sec){
-    var added = { orders:0, inventory:0, shopping:0, meals:0 };
+    var added = { orders:0, inventory:0, shopping:0, meals:0, ledger:0 };
     var skipped = 0;
     var stamp = Date.now();
 
@@ -2677,6 +3379,22 @@
         added.shopping++;
       });
     }
+    if(sec.ledger){
+      sec.ledger.forEach(function(e, i){
+        var key = entryKey(e);
+        var dup = S.ledger.some(function(x){ return entryKey(x) === key; });
+        if(dup){ skipped++; return; }
+        e.id = 'e' + stamp + '-' + i;
+        S.ledger.push(e);
+        added.ledger++;
+      });
+      S.ledger.sort(function(x, y){ return String(y.date).localeCompare(String(x.date)); });
+    }
+    if(sec.cardAdj){
+      Object.keys(sec.cardAdj).forEach(function(k){ if(!S.cardAdj[k]) S.cardAdj[k] = sec.cardAdj[k]; });
+    }
+    if(sec.cardCfg) S.cardCfg = sec.cardCfg;
+    if(sec.userLabels) S.userLabels = normLabels(sec.userLabels);
     if(sec.meals){
       Object.keys(sec.meals).forEach(function(iso){
         var list = S.meals[iso] || (S.meals[iso] = []);
@@ -2701,6 +3419,7 @@
     if(res.added.inventory) parts.push('재고 ' + res.added.inventory + '개');
     if(res.added.meals) parts.push('식단 ' + res.added.meals + '끼');
     if(res.added.shopping) parts.push('장볼 ' + res.added.shopping + '개');
+    if(res.added.ledger) parts.push('가계부 ' + res.added.ledger + '건');
     var msg = parts.length ? ('합치기 · ' + parts.join(' · ')) : '새로 추가할 항목이 없어요';
     if(res.skipped) msg += ' (중복 ' + res.skipped + '건 건너뜀)';
     if(res.legacy) msg += ' (예전 오프라인 장보기 ' + res.legacy + '건은 냉장고 재고로 통합되어 제외)';
@@ -2714,6 +3433,10 @@
     next.meals = sec.meals || {};
     next.inventory = sec.inventory || [];
     next.shopping = sec.shopping || [];
+    next.ledger = sec.ledger || [];
+    next.cardAdj = sec.cardAdj || {};
+    next.cardCfg = sec.cardCfg || { start:1, end:0 };
+    next.userLabels = sec.userLabels || normLabels(null);
     if(sec.dedupe !== null && sec.dedupe !== undefined) next.dedupe = sec.dedupe;
     next.ui = { tab:'meal', cat:'전체', q:'', selDay:'' };
     S = next;
@@ -2805,6 +3528,8 @@
       openInv(el.getAttribute('data-id'));
       return;
     }
+    if(act === 'add-entry'){ openEntry(''); return; }
+    if(act === 'edit-entry'){ openEntry(el.getAttribute('data-id')); return; }
     if(act === 'add-inv'){
       openInv('');
       return;
@@ -2827,6 +3552,29 @@
       return;
     }
     if(act === 'cat'){ S.ui.cat = el.getAttribute('data-cat'); renderAll(); return; }
+    if(act === 'bill-clear'){
+      var tt2 = parseIso(todayIso()) || new Date();
+      delete S.cardAdj[billMonthKey(tt2.getFullYear(), tt2.getMonth())];
+      save();
+      renderCardBill();
+      toast('보정을 지웠어요 · 계산한 금액으로 보여요');
+      return;
+    }
+    if(act === 'edit-who'){ openLabels(); return; }
+    if(act === 'who'){
+      var wv = el.getAttribute('data-who');
+      entryWho = WHO.indexOf(wv) >= 0 ? wv : 'me';
+      Array.prototype.forEach.call(document.querySelectorAll('#enWhoRow .cchip'), function(b){
+        b.classList.toggle('on', b.getAttribute('data-who') === entryWho);
+      });
+      return;
+    }
+    if(act === 'who-filter'){
+      var wf = el.getAttribute('data-who');
+      S.ui.who = WHO.indexOf(wf) >= 0 ? wf : '';
+      renderAll();
+      return;
+    }
     if(act === 'sfav'){
       var sp = null;
       S.shopping.forEach(function(x){ if(x.id === el.getAttribute('data-id')) sp = x; });
@@ -2860,6 +3608,52 @@
   $('ivSave').addEventListener('click', saveInv);
   $('ivDel').addEventListener('click', delInv);
   $('invBackdrop').addEventListener('click', function(e){ if(e.target === $('invBackdrop')) closeInv(); });
+  $('enCancel').addEventListener('click', closeEntry);
+  $('enSave').addEventListener('click', saveEntry);
+  $('enDel').addEventListener('click', delEntry);
+  $('entryBackdrop').addEventListener('click', function(e){ if(e.target === $('entryBackdrop')) closeEntry(); });
+  $('wbSave').addEventListener('click', saveLabels);
+  $('wbCancel').addEventListener('click', closeLabels);
+  $('wbReset').addEventListener('click', function(){
+    $('wbMe').value = DEFAULT_LABELS.me;
+    $('wbPartner').value = DEFAULT_LABELS.partner;
+    $('wbShared').value = DEFAULT_LABELS.shared;
+  });
+  $('labelBackdrop').addEventListener('click', function(e){ if(e.target === $('labelBackdrop')) closeLabels(); });
+  $('enKind').addEventListener('change', syncEntryForm);
+  $('enPay').addEventListener('change', syncEntryForm);
+  $('entryBackdrop').addEventListener('keydown', function(e){
+    if(e.key === 'Enter' && e.target && e.target.tagName !== 'SELECT'){
+      e.preventDefault();
+      saveEntry();
+    }
+  });
+
+  /* 신카 정산 기간 · 실제 청구액 보정 */
+  document.addEventListener('change', function(e){
+    var tgt = e.target;
+    var id = (tgt && tgt.getAttribute) ? (tgt.getAttribute('id') || '') : '';
+    if(id === 'cbStart' || id === 'cbEnd'){
+      var cfg = { start: S.cardCfg.start, end: S.cardCfg.end };
+      if(id === 'cbStart') cfg.start = Math.round(num(e.target.value));
+      else cfg.end = Math.round(num(e.target.value));
+      if(!(cfg.start >= 1 && cfg.start <= 28)) cfg.start = 1;
+      if(!(cfg.end >= 0 && cfg.end <= 31)) cfg.end = 0;
+      S.cardCfg = cfg;
+      save();
+      renderCardBill();
+      return;
+    }
+    if(id === 'cbAdj'){
+      var tt = parseIso(todayIso()) || new Date();
+      var key = billMonthKey(tt.getFullYear(), tt.getMonth());
+      var raw = e.target.value;
+      if(raw === '' || !isFinite(Number(raw))) delete S.cardAdj[key];
+      else S.cardAdj[key] = { amount: Math.round(Number(raw)), memo: '' };
+      save();
+      renderCardBill();
+    }
+  });
   $('ivUnit').addEventListener('change', onUnitChange);
   $('ivFrom').addEventListener('input', syncFromChips);
   $('ivTotal').addEventListener('change', function(){
@@ -2899,7 +3693,7 @@
   function addShopFromInput(){
     var v = $('shName').value.trim();
     if(!v){ toast('살 것을 적어 주세요'); return; }
-    S.shopping.push({ id:'s' + Date.now(), name:v, memo:'직접 추가', fav:false, done:false });
+    S.shopping.push({ id:'s' + Date.now(), name:v, memo:'장볼 목록', fav:false, done:false });
     $('shName').value = '';
     renderAll();
     toast('장볼 목록에 넣었어요');
@@ -3018,6 +3812,8 @@
     if(e.key !== 'Escape') return;
     if(!$('mealBackdrop').hidden) closeMeal();
     else if(!$('invBackdrop').hidden) closeInv();
+    else if(!$('entryBackdrop').hidden) closeEntry();
+    else if(!$('labelBackdrop').hidden) closeLabels();
     else if(!$('dataBackdrop').hidden) closeData();
     else if(!$('themePop').hidden) closeThemePop();
   });
