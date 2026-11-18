@@ -3458,7 +3458,7 @@
 
   $('btnReset').addEventListener('click', function(){
     var msg = SEED
-      ? '식단·재고·장볼 목록을 처음 상태로 되돌릴까요?\n(직접 고친 내용은 사라집니다)'
+      ? '식단·재고·가계부 내역을 처음 상태로 되돌릴까요?\n(직접 고친 내용은 사라집니다)'
       : '이 브라우저에 저장된 데이터를 모두 지울까요?\n(불러온 백업은 사라집니다)';
     if(!confirm(msg)) return;
     S = SEED ? normalizeState(clone(SEED)) : blankState();
