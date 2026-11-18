@@ -1053,7 +1053,7 @@
   .adjline button[hidden]{display:none}
   #enInstBox[hidden],#enPayWrap[hidden]{display:none}
 
-  /* 사용자(나 · 신랑) 구분 */
+  /* 사용자(나 · 배우자 · 공용) 구분 */
   .who-sum{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:6px;font-size:11.5px;font-weight:800;color:var(--ink-2);line-height:1.5}
   .who-sum b{color:var(--ink);font-weight:800}
   .wbadge{display:inline-block;margin-left:5px;font-size:9.5px;font-weight:800;color:var(--soft-ink);background:var(--soft);border-radius:999px;padding:1px 7px;vertical-align:1px;white-space:nowrap}
@@ -1200,7 +1200,7 @@
         <div class="lb">총 지출 (파킹 제외)<span class="ktag" id="lPeriod">주간</span></div>
         <div class="big" id="lTotal">0<span class="u">원</span></div>
         <div class="cap" id="lSplit">장보기 0원 · 외식 0원</div>
-        <div class="who-sum" id="lWho"><span>내 사용 <b>0원</b></span><span>신랑 <b>0원</b></span></div>
+        <div class="who-sum" id="lWho"><span>나 <b>0원</b></span><span>배우자 <b>0원</b></span><span>공용 <b>0원</b></span></div>
       </div>
       <div class="kpi2">
         <div class="box">
@@ -1828,7 +1828,7 @@
   }
   function normWho(v){
     var s = String(v == null ? '' : v).trim();
-    if(s === 'partner' || s === '배우자' || s === '신랑' || s === '남편' || s === 'husband') return 'partner';
+    if(s === 'partner' || s === '배우자' || s === 'spouse' || s === 'husband') return 'partner';
     if(s === 'shared' || s === '공용' || s === '공통') return 'shared';
     return 'me';
   }
