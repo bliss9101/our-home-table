@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#F2F6F3" id="metaTheme">
 <meta name="color-scheme" content="light dark">
-<title>우리집 식탁 · 주간 · 월간 · 연간</title>
+<title>우리집 가계부</title>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="우리집 식탁">
+<meta name="apple-mobile-web-app-title" content="우리집 가계부">
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
@@ -1062,6 +1062,9 @@
   .whoedit:active{transform:scale(.96)}
   @media (max-width:360px){ .whoedit span{display:none} }
   .billadj{font-size:10.5px;font-weight:700;color:var(--ink-3);margin-top:7px;line-height:1.5}
+  .spendlinks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 16px 0}
+  .spendlinks .btn-ghost{width:100%;padding:11px 8px;font-size:12.5px;text-align:center}
+  @media (max-width:360px){ .spendlinks{grid-template-columns:1fr} }
 
   /* 지출 막대(비율 표시) */
   .crow .cv b{display:block;font-weight:800}
@@ -1082,7 +1085,7 @@
   <header class="hd" id="hd">
     <div class="hd-ico">🍽️</div>
     <div class="hd-txt">
-      <div class="kicker" id="hdKicker">우리집 식탁 · 주간</div>
+      <div class="kicker" id="hdKicker">우리집 가계부 · 주간</div>
       <h1 id="hdTitle">이번 주 식단</h1>
     </div>
     <div class="hd-acts">
@@ -1129,7 +1132,7 @@
       <div class="onboard" id="onboard" hidden>
         <div class="ob-ico">📥</div>
         <div>
-          <h3>아직 식탁 데이터가 없어요</h3>
+          <h3>아직 가계부 데이터가 없어요</h3>
           <p>가지고 계신 <b>백업 JSON 파일</b>을 올리거나 내용을 붙여넣으면 주문·재고·식단이 한 번에 채워집니다. 불러온 데이터는 이 브라우저에만 저장돼요.</p>
           <button class="ob-btn" id="obImport">내 데이터 불러오기</button>
         </div>
@@ -1180,18 +1183,16 @@
       <p class="footnote" id="fridgeFoot"></p>
     </section>
 
-    <!-- ============ 3. 장볼 목록 ============ -->
-    <section id="pane-shop" hidden>
-      <div class="countline" style="margin-top:12px;font-size:14px" id="shopCount"></div>
-      <div class="rows" id="shopRows"></div>
-      <div class="inlineform" style="display:flex;gap:8px;align-items:center">
-        <input id="shName" placeholder="살 것 추가 (예: 우유)" autocomplete="off" style="flex:1 1 auto">
-        <button class="btn-primary" id="shAdd">추가</button>
+    <!-- ============ 3. 지출 내역 ============ -->
+    <section id="pane-spend" hidden>
+      <div style="margin:18px 16px 0"><div class="sec-title">📝 내역 <span class="sub" id="lCount">0건</span></div></div>
+      <div class="countline" id="spendTop" style="margin-top:8px;font-size:13.5px"></div>
+      <div class="chips" id="whoChips" style="padding-top:8px"></div>
+      <div class="entrylist" id="entryList" style="margin-top:2px"></div>
+      <div style="margin:12px 16px 0">
+        <button class="btn-wide" id="btnAddEntry" data-act="add-entry">+ 내역 추가 (수입 · 파킹 · 지출)</button>
       </div>
-      <div class="copywrap">
-        <button class="btn-wide" id="btnCopy">🛒 피클에게 쿠팡 장바구니 담기 요청 복사</button>
-      </div>
-      <p class="footnote" id="shopFoot"></p>
+      <p class="footnote" id="spendFoot"></p>
     </section>
 
     <!-- ============ 4. 가계부 (생활 가계부) ============ -->
@@ -1239,17 +1240,9 @@
         <p class="billadj" id="lParkCap" style="margin-top:5px">전체 기간 누적 잔액</p>
       </div>
 
-      <div style="margin:18px 16px 0"><div class="sec-title">📝 내역 <span class="sub" id="lCount">0건</span></div></div>
-      <div class="chips" id="whoChips" style="padding-top:8px"></div>
-      <div class="entrylist" id="entryList" style="margin-top:2px"></div>
-      <div style="margin:12px 16px 0">
-        <button class="btn-wide" id="btnAddEntry" data-act="add-entry">+ 내역 추가 (수입 · 파킹 · 지출)</button>
-      </div>
-
-      <div style="margin:20px 16px 0"><div class="sec-title">🧺 장보기 자동 집계 <span class="sub">냉장고·주문에서 모은 금액</span></div></div>
-      <div class="ledgerlist" id="directList"></div>
-      <div style="margin:10px 16px 0">
-        <button class="btn-ghost" id="btnAddFromLedger" style="width:100%">+ 산 품목을 냉장고에 추가 (재고·장보기로 들어가요)</button>
+      <div class="spendlinks">
+        <button type="button" class="btn-ghost" data-act="add-entry">+ 내역 추가</button>
+        <button type="button" class="btn-ghost" data-act="go-spend">📝 지출 내역 보기</button>
       </div>
       <p class="footnote" id="ledgerFoot"></p>
     </section>
@@ -1273,6 +1266,12 @@
         <div class="muted" id="chartCap" style="margin-top:3px">0개 분류 · 0개 품목</div>
         <div id="chartRows"></div>
       </div>
+
+      <div style="margin:20px 16px 0"><div class="sec-title">🧺 장보기 자동 집계 <span class="sub">냉장고·주문에서 모은 금액</span></div></div>
+      <div class="ledgerlist" id="directList"></div>
+      <div style="margin:10px 16px 0">
+        <button class="btn-ghost" id="btnAddFromLedger" style="width:100%">+ 산 품목을 냉장고에 추가 (재고·장보기로 들어가요)</button>
+      </div>
       <p class="footnote" id="sumFoot"></p>
     </section>
   </main>
@@ -1286,16 +1285,16 @@
       <span class="ti"><svg viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="2.4"/><path d="M6 10h12M9 6.6v1.6M9 13.4v1.8"/></svg></span>
       <span class="tl">냉장고 재고</span>
     </button>
-    <button class="tab" data-tab="shop" aria-label="장볼 목록">
-      <span class="ti"><svg viewBox="0 0 24 24"><path d="M4 8.6h16l-1.4 10.2a2 2 0 0 1-2 1.7H7.4a2 2 0 0 1-2-1.7L4 8.6Z"/><path d="M8.6 8.6 12 3l3.4 5.6"/></svg></span>
-      <span class="tl">장볼 목록</span>
+    <button class="tab" data-tab="spend" aria-label="지출 내역">
+      <span class="ti"><svg viewBox="0 0 24 24"><path d="M6 2.9h12v18.2l-2-1.4-2 1.4-2-1.4-2 1.4-2-1.4-2 1.4V2.9Z"/><path d="M9.2 7.6h5.6M9.2 11.2h5.6M9.2 14.8h3.4"/></svg></span>
+      <span class="tl">지출 내역</span>
     </button>
     <button class="tab" data-tab="ledger" aria-label="가계부">
-      <span class="ti"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.2"/><path d="M8.6 8h6.8M8.6 12h6.8M8.6 16h4"/></svg></span>
+      <span class="ti"><svg viewBox="0 0 24 24"><rect x="2.9" y="5.6" width="18.2" height="13.2" rx="2.6"/><path d="M2.9 9.4h18.2M15.6 14.4h2.2"/></svg></span>
       <span class="tl">가계부</span>
     </button>
     <button class="tab" data-tab="sum" aria-label="장보기 요약">
-      <span class="ti"><svg viewBox="0 0 24 24"><path d="M6 3.2h12V21l-3-1.8-3 1.8-3-1.8L6 21V3.2Z"/><path d="M9.2 8.4h5.6M9.2 12.4h5.6"/></svg></span>
+      <span class="ti"><svg viewBox="0 0 24 24"><path d="M4.4 8.2h15.2l-1.3 10.3a2 2 0 0 1-2 1.7H7.7a2 2 0 0 1-2-1.7L4.4 8.2Z"/><path d="M8.8 8.2V6.1a3.2 3.2 0 0 1 6.4 0v2.1"/></svg></span>
       <span class="tl">장보기 요약</span>
     </button>
   </nav>
@@ -1467,7 +1466,7 @@
 
   var CONFIG = {
   "key": "ourHomeTable.pages.v2",
-  "kicker": "우리집 식탁",
+  "kicker": "우리집 가계부",
   "servings": 2,
   "exportName": "our-home-table-backup.json",
   "note": "빈 템플릿 · 불러온 데이터는 이 기기에만 저장돼요",
@@ -1475,9 +1474,9 @@
   "notes": {
     "meal": "주간·월간·연간으로 넘겨 보며 식단을 관리합니다. 끼니에 냉장고 재료와 사용량을 연결해 두면 완료 체크할 때 재고가 그만큼 줄고 남은 양이 바로 보여요. 끼니 카드의 수정 버튼에서 고치거나 삭제할 수 있습니다.",
     "fridge": "재료마다 총량·남은 양과 구매일·구매처를 적어 두면 보관일수와 유통기한을 확인할 수 있어요. 재료를 누르면 수정·삭제할 수 있고, 남은 양이 0이 되면 자동으로 소진 처리됩니다.",
-    "shop": "식단에 필요한데 냉장고에 없는 부재료를 모아 두는 목록이에요. 복사한 요청을 피클에게 붙여넣으면 쿠팡 장바구니에 담아 두고, 결제는 직접 하시면 됩니다.",
-    "ledger": "가계부는 위에서 고른 기간(주간·월간·연간)에 맞춰 계산됩니다. 총 지출(파킹 제외) = 기간 안의 장보기(냉장고 재고·주문 식품) + 가계부에 적은 지출입니다. 비상금·적금은 지출에 넣지 않고 파킹으로 따로 모읍니다. 냉장고에 넣은 구매는 자동으로 장보기에 잡히므로 같은 건을 가계부에 또 적으면 두 번 잡힙니다.",
-    "sum": "불러온 주문과 냉장고에 적은 구매를 구매처별로 묶어 보여줍니다. 집밥(장보기)과 외식이 차지하는 비율을 함께 볼 수 있고, 음식이 아닌 생활용품은 식재료 그래프에서 빠집니다."
+    "spend": "이 기간에 적은 수입·지출·비상금 파킹 내역이에요. 카드를 누르면 금액·날짜·결제수단·사용자를 고칠 수 있고, 사람별 칩으로 한 사람 몫만 모아 볼 수 있어요.",
+    "ledger": "가계부는 위에서 고른 기간(주간·월간·연간)에 맞춰 계산됩니다. 총 지출(파킹 제외) = 기간 안의 장보기(냉장고 재고·주문 식품) + 가계부에 적은 지출입니다. 비상금·적금은 지출에 넣지 않고 파킹으로 따로 모읍니다. 냉장고에 넣은 구매는 자동으로 장보기에 잡히므로 같은 건을 가계부에 또 적으면 두 번 잡힙니다. 낱건 내역은 지출 내역 탭에서 봅니다.",
+    "sum": "불러온 주문과 냉장고에 적은 구매를 구매처별로 묶어 보여줍니다. 집밥(장보기)과 외식이 차지하는 비율을 함께 볼 수 있고, 아래 장보기 자동 집계에서 냉장고·주문에서 모인 금액을 낱건으로 보며 바로 냉장고에 넣을 수 있어요. 음식이 아닌 생활용품은 식재료 그래프에서 빠집니다."
   }
 };
   var SEED = null;
@@ -1488,7 +1487,7 @@
     burgundy:{emoji:'🍷', name:'버건디', label:'딥 버건디', color:'#F8F3F2'}
   };
   var THEME_KEY = 'ourHomeTable.theme';
-  var TABS = ['meal','fridge','shop','ledger','sum'];
+  var TABS = ['meal','fridge','spend','ledger','sum'];
   /* 가계부 구분 3종 — 수입 / 파킹·저축 / 지출 */
   var LEDGER = {
     income:  { name:'수입',      cats:['수입','이자수익'] },
@@ -2081,7 +2080,7 @@
     var kicker = CONFIG.kicker + ' · ' + PERIODS[S.period];
     $('hdKicker').textContent = kicker;
     $('hdTitle').textContent = r.title;
-    document.title = r.title + ' · 장보기';
+    document.title = r.title + ' · 우리집 가계부';
   }
   function renderNav(r){
     Array.prototype.forEach.call(document.querySelectorAll('#seg button'), function(b){
@@ -2412,25 +2411,36 @@
     }).join('');
   }
 
-  /* ================= 렌더: 장볼 목록 ================= */
-  function renderShop(){
-    var left = S.shopping.filter(function(s){ return !s.done; }).length;
-    $('shopCount').innerHTML = '장볼 목록 · 남은 <b>' + left + '</b>개 <span class="muted">/ 전체 ' + S.shopping.length + '개</span>';
+  /* ================= 렌더: 지출 내역 ================= */
+  function renderSpend(r, a){
+    $('spendTop').textContent = PERIODS[S.period] + ' · 지출 ' + won(a.expense) + ' · 수입 ' + won(a.income) +
+      (a.saving ? ' · 파킹 ' + won(a.saving) : '');
 
-    if(!S.shopping.length){
-      $('shopRows').innerHTML = '<p class="empty">장볼 것이 없어요.<br>아래 칸에 살 것을 적어 넣어 주세요.</p>';
-      return;
-    }
-    $('shopRows').innerHTML = S.shopping.map(function(s){
-      return '<div class="row shoprow' + (s.done ? ' dim' : '') + '">' +
-        '<button class="star' + (s.fav ? ' on' : '') + '" data-act="sfav" data-id="' + esc(s.id) + '" aria-label="즐겨찾기">' + (s.fav ? '★' : '☆') + '</button>' +
-        '<button class="chk' + (s.done ? ' on' : '') + '" data-act="sdone" data-id="' + esc(s.id) + '" aria-label="체크">' + (s.done ? '✓' : '') + '</button>' +
-        '<div style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center">' +
-          '<div><p class="rname">' + esc(s.name) + '</p><p class="rmeta">' + esc(s.memo || '') + '</p></div>' +
-          '<button class="del" data-act="sdel" data-id="' + esc(s.id) + '" aria-label="삭제">×</button>' +
-        '</div>' +
-        '</div>';
+    var entries = a.ledger.slice().sort(function(x, y){
+      var d = String(y.date).localeCompare(String(x.date));
+      return d || String(y.id).localeCompare(String(x.id));
+    });
+    var inc = entries.filter(function(e){ return e.kind === 'income'; }).length;
+    var sav = entries.filter(function(e){ return e.kind === 'save'; }).length;
+    $('lCount').textContent = entries.length ? (entries.length + '건 · 지출 ' + (entries.length - inc - sav) + (inc ? ' · 수입 ' + inc : '') + (sav ? ' · 파킹 ' + sav : '')) : '0건';
+
+    /* 지출자 필터 */
+    var counts = { '':entries.length, me:0, partner:0, shared:0 };
+    entries.forEach(function(e){ counts[normWho(e.who)]++; });
+    var opts = [['', '전체']].concat(WHO.map(function(k){ return [k, whoLabel(k)]; }));
+    $('whoChips').innerHTML = opts.map(function(o){
+      var on = (S.ui.who || '') === o[0] ? ' on' : '';
+      return '<button class="chip' + on + '" data-act="who-filter" data-who="' + o[0] + '">' +
+        esc(o[1]) + ' ' + (counts[o[0]] || 0) + '</button>';
     }).join('');
+    var shown = S.ui.who ? entries.filter(function(e){ return normWho(e.who) === S.ui.who; }) : entries;
+    if(!entries.length){
+      $('entryList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 적은 내역이 없어요.<br>아래 버튼으로 수입·지출을 추가하면 카테고리별 지출에 바로 반영돼요.</p>';
+    }else if(!shown.length){
+      $('entryList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 ' + esc(whoLabel(S.ui.who)) + '로 적은 내역이 없어요.</p>';
+    }else{
+      $('entryList').innerHTML = shown.map(entryRowHtml).join('');
+    }
   }
 
   /* ================= 렌더: 가계부 ================= */
@@ -2592,35 +2602,10 @@
     $('lParkTotal').innerHTML = fmt(a.park) + '<span class="u">원</span>';
     $('lParkCap').textContent = '전체 기간 누적 · ' + a.parkCount + '건' +
       (a.saving ? (' · 이 기간 파킹 ' + won(a.saving)) : '');
+  }
 
-    /* 내역 */
-    var entries = a.ledger.slice().sort(function(x, y){
-      var d = String(y.date).localeCompare(String(x.date));
-      return d || String(y.id).localeCompare(String(x.id));
-    });
-    var inc = entries.filter(function(e){ return e.kind === 'income'; }).length;
-    var sav = entries.filter(function(e){ return e.kind === 'save'; }).length;
-    $('lCount').textContent = entries.length ? (entries.length + '건 · 지출 ' + (entries.length - inc - sav) + (inc ? ' · 수입 ' + inc : '') + (sav ? ' · 파킹 ' + sav : '')) : '0건';
-
-    /* 지출자 필터 */
-    var counts = { '':entries.length, me:0, partner:0, shared:0 };
-    entries.forEach(function(e){ counts[normWho(e.who)]++; });
-    var opts = [['', '전체']].concat(WHO.map(function(k){ return [k, whoLabel(k)]; }));
-    $('whoChips').innerHTML = opts.map(function(o){
-      var on = (S.ui.who || '') === o[0] ? ' on' : '';
-      return '<button class="chip' + on + '" data-act="who-filter" data-who="' + o[0] + '">' +
-        esc(o[1]) + ' ' + (counts[o[0]] || 0) + '</button>';
-    }).join('');
-    var shown = S.ui.who ? entries.filter(function(e){ return normWho(e.who) === S.ui.who; }) : entries;
-    if(!entries.length){
-      $('entryList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 적은 내역이 없어요.<br>아래 버튼으로 수입·지출을 추가하면 카테고리별 지출에 바로 반영돼요.</p>';
-    }else if(!shown.length){
-      $('entryList').innerHTML = '<p class="empty" style="margin:6px 16px 10px">이 기간에 ' + esc(whoLabel(S.ui.who)) + '로 적은 내역이 없어요.</p>';
-    }else{
-      $('entryList').innerHTML = shown.map(entryRowHtml).join('');
-    }
-
-    /* 장보기 자동 집계 (냉장고 · 주문) */
+  /* ================= 렌더: 장보기 자동 집계 (장보기 요약 탭) ================= */
+  function renderAutoShopping(a){
     var autos = [];
     a.orders.forEach(function(o){
       autos.push({ date:o.date, name:(o.store || '쿠팡') + ' 주문',
@@ -2783,6 +2768,9 @@
     /* 집밥 vs 외식 */
     $('ratioSub').textContent = PERIODS[S.period] + ' · ' + r.label;
     $('ratioBody').innerHTML = ratioHtml(a, r);
+
+    /* 장보기 자동 집계 */
+    renderAutoShopping(a);
   }
 
   /* ================= 전체 렌더 ================= */
@@ -2804,7 +2792,7 @@
     renderProgress(r, a);
     renderPlanner(r, a);
     renderFridge(a);
-    renderShop();
+    renderSpend(r, a);
     renderLedger(r, a);
     renderSummary(r, a);
     updateChrome();
@@ -3325,7 +3313,7 @@
     var d = (p && typeof p === 'object' && p.data && typeof p.data === 'object') ? p.data : p;
     if(!d || typeof d !== 'object' || Array.isArray(d)) throw new Error('데이터를 읽을 수 없어요.');
     var sec = pickSections(d, defaultDate);
-    if(!sec.any) throw new Error('우리집 식탁 데이터 형식이 아니에요. (orders·meals·inventory·shopping·ledger 중 하나가 필요해요)');
+    if(!sec.any) throw new Error('우리집 가계부 데이터 형식이 아니에요. (orders·meals·inventory·shopping·ledger 중 하나가 필요해요)');
     sec.cursor = isIso(d.cursor) ? d.cursor : (isIso(d.weekStart) ? d.weekStart : '');
     sec.period = PERIODS[d.period] ? d.period : '';
     sec.dedupe = (typeof d.dedupe === 'boolean') ? d.dedupe : null;
@@ -3576,24 +3564,7 @@
       renderAll();
       return;
     }
-    if(act === 'sfav'){
-      var sp = null;
-      S.shopping.forEach(function(x){ if(x.id === el.getAttribute('data-id')) sp = x; });
-      if(sp){ sp.fav = !sp.fav; renderAll(); }
-      return;
-    }
-    if(act === 'sdone'){
-      var sd = null;
-      S.shopping.forEach(function(x){ if(x.id === el.getAttribute('data-id')) sd = x; });
-      if(sd){ sd.done = !sd.done; renderAll(); }
-      return;
-    }
-    if(act === 'sdel'){
-      var sid = el.getAttribute('data-id');
-      S.shopping = S.shopping.filter(function(x){ return x.id !== sid; });
-      renderAll();
-      return;
-    }
+    if(act === 'go-spend'){ setTab('spend'); return; }
   });
 
   $('mmAddIng').addEventListener('click', function(){
@@ -3689,54 +3660,7 @@
 
   $('btnToggleAdd').addEventListener('click', function(){ openInv(''); });
 
-  $('shAdd').addEventListener('click', addShopFromInput);
-  $('shName').addEventListener('keydown', function(e){ if(e.key === 'Enter') addShopFromInput(); });
-  function addShopFromInput(){
-    var v = $('shName').value.trim();
-    if(!v){ toast('살 것을 적어 주세요'); return; }
-    S.shopping.push({ id:'s' + Date.now(), name:v, memo:'장볼 목록', fav:false, done:false });
-    $('shName').value = '';
-    renderAll();
-    toast('장볼 목록에 넣었어요');
-  }
-
   $('btnAddFromLedger').addEventListener('click', function(){ openInv(''); });
-
-  $('btnCopy').addEventListener('click', function(){
-    var left = S.shopping.filter(function(s){ return !s.done; });
-    if(!left.length){ toast('장볼 것이 남아 있지 않아요'); return; }
-    var text = '피클, 쿠팡 장바구니 담기 요청\n';
-    text += '우리집 식탁 · ' + currentRange().label + ' (' + CONFIG.servings + '인 가족)\n\n';
-    left.forEach(function(s, i){
-      text += (i + 1) + '. ' + s.name + (s.memo ? (' — ' + s.memo) : '') + '\n';
-    });
-    text += '\n위 목록을 쿠팡 장바구니에 담아줘. 결제는 내가 할게.';
-
-    var ok = function(){ toast('장볼 목록 ' + left.length + '개를 복사했어요. 피클에게 붙여넣으면 됩니다'); };
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(ok).catch(function(){ legacyCopy(text, ok); });
-    }else{
-      legacyCopy(text, ok);
-    }
-  });
-  function legacyCopy(text, cb){
-    try{
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.top = '-1000px';
-      document.body.appendChild(ta);
-      ta.select();
-      ta.setSelectionRange(0, ta.value.length);
-      var ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      if(ok) cb();
-      else toast('복사가 막혔어요. 길게 눌러 직접 복사해 주세요');
-    }catch(e){
-      toast('복사가 막혔어요. 길게 눌러 직접 복사해 주세요');
-    }
-  }
 
   /* ---- 테마 UI ---- */
   $('btnTheme').addEventListener('click', function(e){
@@ -3830,7 +3754,7 @@
 
   $('mealFoot').textContent = CONFIG.notes.meal;
   $('fridgeFoot').textContent = CONFIG.notes.fridge;
-  $('shopFoot').textContent = CONFIG.notes.shop;
+  $('spendFoot').textContent = CONFIG.notes.spend;
   $('ledgerFoot').textContent = CONFIG.notes.ledger;
   $('sumFoot').textContent = CONFIG.notes.sum;
 
