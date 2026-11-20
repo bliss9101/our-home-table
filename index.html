@@ -1936,7 +1936,7 @@
     base.shopping = normShop(p.shopping || p.shop) || [];
     base.ledger = normLedger(p.ledger || p.entries || p.book) || [];
     base.cardAdj = normCardAdj(p.cardAdj) || {};
-    base.cardCfg = normCardCfg(p.cardCfg) || { start: 1, end: 0 };
+    base.cardCfg = normCardCfg(p.cardCfg) || defaultCardCfg();
     base.userLabels = normLabels(p.userLabels || p.labels);
     if(typeof p.dedupe === 'boolean') base.dedupe = p.dedupe;
     if(p.ui && typeof p.ui === 'object'){
