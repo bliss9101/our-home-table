@@ -284,6 +284,7 @@
   }
   .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 16px 2px;scrollbar-width:none}
   .chips::-webkit-scrollbar{display:none}
+  .chips-lb{flex:0 0 auto;align-self:center;font-size:11px;font-weight:800;color:var(--ink-3);letter-spacing:-.2px;padding-right:1px}
   .chip{
     flex:0 0 auto;padding:8px 14px;border-radius:999px;background:var(--chip);
     border:1px solid var(--line-2);font-size:12.5px;font-weight:800;color:var(--ink-2);white-space:nowrap;
@@ -2407,7 +2408,8 @@
     var usedN = S.inventory.length - a.heldCount;
     var st = (S.ui.invStatus === 'held' || S.ui.invStatus === 'used') ? S.ui.invStatus : 'all';
     if(S.ui.invStatus !== st) S.ui.invStatus = st;
-    $('invStatusChips').innerHTML = [['all', '전체', S.inventory.length], ['held', '보유만', a.heldCount], ['used', '소진만', usedN]]
+    $('invStatusChips').innerHTML = '<span class="chips-lb">상태</span>' +
+      [['all', '전체', S.inventory.length], ['held', '보유만', a.heldCount], ['used', '소진만', usedN]]
       .map(function(o){
         return '<button class="chip' + (st === o[0] ? ' on' : '') + '" data-act="inv-status" data-st="' + o[0] + '"' +
           (o[0] === 'held' ? ' aria-label="보유만 보기"' : (o[0] === 'used' ? ' aria-label="소진만 보기"' : '')) +
