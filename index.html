@@ -2011,14 +2011,30 @@
   }
 
   /* ================= 집계 ================= */
+  /* 주문 목록에 있는 구매처 이름 (없으면 쿠팡 — 주문 카드의 기본값과 같게) */
+  function orderStoreName(o){
+    return String((o && o.store) || '').trim() || '쿠팡';
+  }
+  /* 주문에서 온 재고(src:'online')라도 그 주문이 S.orders 에 없으면 어디에도 안 잡히므로 따로 집계한다.
+     같은 구매처·같은 날짜 주문이 실제로 있을 때만 '주문 쪽에서 이미 센 금액'으로 보고 뺀다.
+     날짜가 비어 있으면 주문과 맞출 수 없어 예전처럼 뺀다(이중 합산 방지). */
+  function isOrderBackedInv(i){
+    if(!i || i.src !== 'online') return false;
+    if(!isIso(i.date)) return true;
+    var nm = storeLabel(i);
+    return S.orders.some(function(o){
+      return isIso(o.date) && o.date === i.date && orderStoreName(o) === nm;
+    });
+  }
   function agg(r){
     var from = r.from, to = r.to;
     function inR(iso){ return inRange(iso, from, to); }
 
     var orders = S.orders.filter(function(o){ return inR(o.date); });
     var online = sumBy(orders, function(o){ return o.foodAmount; });
-    /* 직접 입력분 = 쿠팡 주문에서 온 재고(src online)가 아닌, 구매일이 기간 안인 재고 품목 */
-    var directItems = S.inventory.filter(function(i){ return i.src !== 'online' && inR(i.date); });
+    /* 직접 입력분 = 구매일이 기간 안인 재고 품목 중, 같은 날 같은 구매처 주문이 없어 주문에 안 잡힌 것
+       (쿠팡 주문에서 온 재고는 주문 금액에 이미 들어 있어 뺀다) */
+    var directItems = S.inventory.filter(function(i){ return !isOrderBackedInv(i) && inR(i.date); });
     var direct = sumBy(directItems, function(i){ return i.price; });
     var purchase = online + direct;
 
@@ -2102,7 +2118,7 @@
       var from = isoOf(new Date(year, m, 1));
       var to = isoOf(new Date(year, m + 1, 0));
       var online = sumBy(S.orders.filter(function(o){ return inRange(o.date, from, to); }), function(o){ return o.foodAmount; });
-      var dir = sumBy(S.inventory.filter(function(i){ return i.src !== 'online' && inRange(i.date, from, to); }), function(i){ return i.price; });
+      var dir = sumBy(S.inventory.filter(function(i){ return !isOrderBackedInv(i) && inRange(i.date, from, to); }), function(i){ return i.price; });
       var used = sumBy(S.inventory.filter(function(i){ return i.used && inRange(i.usedDate || i.date, from, to); }), function(i){ return i.price; });
       out.push({ m:m + 1, purchase:online + dir, used:used });
     }
@@ -2723,13 +2739,13 @@
     }
     S.orders.forEach(function(o){
       if(!inRange(o.date, r.from, r.to)) return;
-      var g = get(o.store || '쿠팡');
+      var g = get(orderStoreName(o));
       g.orders.push(o);
       g.amount += num(o.amount);
       g.food += num(o.foodAmount);
     });
     S.inventory.forEach(function(i){
-      if(i.src === 'online' || !inRange(i.date, r.from, r.to)) return;
+      if(isOrderBackedInv(i) || !inRange(i.date, r.from, r.to)) return;
       var g = get(storeLabel(i));
       g.items.push(i);
       g.amount += num(i.price);
